@@ -17,6 +17,19 @@ class TestEvaluator(unittest.TestCase):
 
     def test_basic_operator(self):
         self.check(BinaryOperator('+', IntegerLiteral(10), IntegerLiteral(20)), 30)
+        self.check(BinaryOperator('-', IntegerLiteral(10), IntegerLiteral(20)), -10)
+        self.check(BinaryOperator('-', IntegerLiteral(20), IntegerLiteral(10)), 10)
+        self.check(BinaryOperator('*', IntegerLiteral(10), IntegerLiteral(20)), 200)
+        self.check(BinaryOperator('/', IntegerLiteral(20), IntegerLiteral(10)), 2)
+        self.check(BinaryOperator('|', IntegerLiteral(10), IntegerLiteral(25)), 27)
+        self.check(BinaryOperator('&', IntegerLiteral(10), IntegerLiteral(25)), 8)
+
+        self.check(BinaryOperator('<',  IntegerLiteral(10), IntegerLiteral(25)), 1)
+        self.check(BinaryOperator('>',  IntegerLiteral(10), IntegerLiteral(25)), 0)
+        self.check(BinaryOperator('<=', IntegerLiteral(10), IntegerLiteral(25)), 1)
+        self.check(BinaryOperator('>=', IntegerLiteral(10), IntegerLiteral(25)), 0)
+        self.check(BinaryOperator('=',  IntegerLiteral(10), IntegerLiteral(25)), 0)
+        self.check(BinaryOperator('<>', IntegerLiteral(10), IntegerLiteral(25)), 1)
 
     def test_priorities(self):
         self.check(BinaryOperator('+', IntegerLiteral(1), BinaryOperator('*', IntegerLiteral(2), IntegerLiteral(3))), 7)
