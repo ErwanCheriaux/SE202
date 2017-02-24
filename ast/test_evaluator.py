@@ -32,7 +32,23 @@ class TestEvaluator(unittest.TestCase):
         self.check(BinaryOperator('<>', IntegerLiteral(10), IntegerLiteral(25)), 1)
 
     def test_priorities(self):
-        self.check(BinaryOperator('+', IntegerLiteral(1), BinaryOperator('*', IntegerLiteral(2), IntegerLiteral(3))), 7)
+        self.check(BinaryOperator('+', IntegerLiteral(1), BinaryOperator('*', IntegerLiteral(2),  IntegerLiteral(3))), 7)
+        self.check(BinaryOperator('+', IntegerLiteral(1), BinaryOperator('*', IntegerLiteral(-2), IntegerLiteral(3))), -5)
+        self.check(BinaryOperator('-', IntegerLiteral(1), BinaryOperator('*', IntegerLiteral(2),  IntegerLiteral(3))), -5)
+        self.check(BinaryOperator('+', IntegerLiteral(1), BinaryOperator('/', IntegerLiteral(6),  IntegerLiteral(3))), 3)
+
+        self.check(BinaryOperator('<',  IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 0)
+        self.check(BinaryOperator('<=', IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 0)
+        self.check(BinaryOperator('>',  IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 1)
+        self.check(BinaryOperator('>=', IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 1)
+        self.check(BinaryOperator('=',  IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 0)
+        self.check(BinaryOperator('<>', IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 1)
+
+        self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   27)
+        self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   10)
+        self.check(BinaryOperator('&', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   8)
+        self.check(BinaryOperator('&', IntegerLiteral(10), BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   0)
+        self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('&', IntegerLiteral(57), IntegerLiteral(29))), 27)
 
     def test_parse_literal(self):
         self.parse_check('42', 42)
