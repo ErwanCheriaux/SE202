@@ -18,8 +18,12 @@ class TestDumper(unittest.TestCase):
     def test_priority(self):
         self.check("1+2*3", "(1 + (2 * 3))")
         self.check("2*3+1", "((2 * 3) + 1)")
+
         self.check("6|3+1", "(6 | (3 + 1))")
+        self.check("3+1|6", "((3 + 1) | 6)")
+
         self.check("6&3+1", "(6 & (3 + 1))")
+        self.check("3+1&6", "((3 + 1) & 6)")
 
 if __name__ == '__main__':
     unittest.main()
