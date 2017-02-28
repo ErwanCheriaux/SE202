@@ -20,6 +20,13 @@ keywords = {'array': 'ARRAY',
             'var': 'VAR',
             'while': 'WHILE'}
 
+#Liste of reserved words
+reserved = {
+   'if' : 'IF',
+   'then' : 'THEN',
+   'else' : 'ELSE'
+}
+
 # List of tokens that can be recognized and are handled by the current
 # grammar rules.
 tokens = ('END', 'IN', 'LET', 'VAR',
@@ -28,7 +35,7 @@ tokens = ('END', 'IN', 'LET', 'VAR',
           'COMMA', 'SEMICOLON',
           'LPAREN', 'RPAREN',
           'NUMBER', 'ID',
-          'COLON', 'ASSIGN')
+          'COLON', 'ASSIGN') + tuple(reserved.values())
 
 t_PLUS      = r'\+'
 t_MINUS     = r'-'
@@ -49,6 +56,10 @@ t_ASSIGN    = r':='
 t_COMMA     = r','
 t_SEMICOLON = r';'
 
+t_IF   = r'if'
+t_THEN = r'then'
+t_ELSE = r'else'
+
 t_ignore = ' \t'
 
 # Count lines when newlines are encountered
@@ -61,6 +72,7 @@ def t_newline(t):
 # not know what to do about it.
 def t_ID(t):
     r'[A-Za-z][A-Za-z\d_]*'
+    t.type = reserved.get(t.value,'ID')    # Check for reserved words
     if t.value in keywords:
         t.type = keywords.get(t.value)
         if t.type not in tokens:

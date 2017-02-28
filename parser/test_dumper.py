@@ -16,6 +16,8 @@ class TestDumper(unittest.TestCase):
         self.check("42", "42")
 
     def test_priority(self):
+        self.check("3-1-2", "((3 - 1) - 2)")
+
         self.check("1+2*3", "(1 + (2 * 3))")
         self.check("2*3+1", "((2 * 3) + 1)")
 
