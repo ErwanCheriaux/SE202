@@ -9,3 +9,6 @@ La première étape consiste à ajouter les opérateurs binaires et de comparais
 On réalise également des tests pour vérifier leurs bonnes implémentations: règle des priorités conformes.
 
 De plus, on implémente la construction if/then/else.
+Pour tester if/then/else entrez la commande:
+
+./tiger.py -e -E"if 0 then 2 else 3"
