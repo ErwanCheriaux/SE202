@@ -26,32 +26,33 @@ class Evaluator:
         elif op == '&':
             return left & right
         elif op == '<':
-            return left < right
+            return (left < right)*1
         elif op == '>':
-            return left > right
+            return (left > right)*1
         elif op == '<=':
-            return left <= right
+            return (left <= right)*1
         elif op == '>=':
-            return left >= right
+            return (left >= right)*1
         elif op == '=':
-            return left == right
+            return (left == right)*1
         elif op == '<>':
-            return left != right
+            return (left != right)*1
         else:
             raise SyntaxError("unknown operator %s" % op)
 
-@visitor(IfThenElse)
-def visit(self, c):
-    condition = c.condition.accept(self)
-    then_part = c.then_part.accept(self)
-    else_part = c.else_part.accept(self)
-    children  = c.children
-    if condition == True:
-        return then_part
-    elif condition == False:
-        return else_part
-    else:
-        raise SyntaxError("unknown cond %s" % condition)
+    @visitor(IfThenElse)
+    def visit(self, c):
+        condition = c.condition.accept(self)
+        then_part = c.then_part.accept(self)
+        else_part = c.else_part.accept(self)
+        children  = c.children
+
+        if type(condition) != int:
+            raise SyntaxError("wrong condition %s" % condition)
+        elif condition != 0:
+            return then_part
+        else:
+            return else_part
 
     @visitor(None)
     def visit(self, node):
