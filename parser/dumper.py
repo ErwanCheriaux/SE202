@@ -23,6 +23,12 @@ class Dumper(Visitor):
         # be superfluous.
         return "(%s %s %s)" % (binop.left.accept(self), binop.op, binop.right.accept(self))
 
+    @visitor(IfThenElse)
+    def visit(self, c):
+        # Always use parentheses to reflect grouping and associativity, even if they may
+        # be superfluous.
+        return "(if %s then %s else %s)" % (c.condition.accept(self), c.then_part.accept(self), c.else_part.accept(self))
+
     @visitor(Identifier)
     def visit(self, id):
         return id.name
