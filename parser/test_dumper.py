@@ -31,8 +31,6 @@ class TestDumper(unittest.TestCase):
         self.check("6|3&1", "(6 | (3 & 1))")
         self.check("3&1|6", "((3 & 1) | 6)")
 
-        self.check("1|4&8+4-2", "(1 | (4 & ((8 + 4) - 2)))")
-
         self.check("1+2<3", "((1 + 2) < 3)")
         self.check("2<3+1", "(2 < (3 + 1))")
 
@@ -50,6 +48,8 @@ class TestDumper(unittest.TestCase):
 
         self.check("1+2<>3", "((1 + 2) <> 3)")
         self.check("2<>3+1", "(2 <> (3 + 1))")
+
+        self.check("1|4&8+4-2<12", "(1 | (4 & (((8 + 4) - 2) < 12)))")
 
 if __name__ == '__main__':
     unittest.main()
