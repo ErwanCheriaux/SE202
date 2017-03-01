@@ -35,12 +35,8 @@ def p_expression_binop(p):
     p[0] = BinaryOperator(p[2], p[1], p[3])
 
 def p_expression_ifthenelse(p):
-    '''expression : IF expression THEN expression
-                  | IF expression THEN expression ELSE expression'''
-    if len(p)>5:
-        p[0] = IfThenElse(p[2], p[4], p[6])
-    else:
-        p[0] = IfThenElse(p[2], p[4], IntegerLiteral(0))
+    '''expression : IF expression THEN expression ELSE expression'''
+    p[0] = IfThenElse(p[2], p[4], p[6])
 
 def p_expression_parentheses(p):
     'expression : LPAREN expression RPAREN'
