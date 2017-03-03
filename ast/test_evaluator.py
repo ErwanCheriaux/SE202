@@ -21,6 +21,7 @@ class TestEvaluator(unittest.TestCase):
         self.check(BinaryOperator('-', IntegerLiteral(20), IntegerLiteral(10)), 10)
         self.check(BinaryOperator('*', IntegerLiteral(10), IntegerLiteral(20)), 200)
         self.check(BinaryOperator('/', IntegerLiteral(20), IntegerLiteral(10)), 2)
+        self.check(BinaryOperator('/', IntegerLiteral(5), IntegerLiteral(2)), 2)
         self.check(BinaryOperator('|', IntegerLiteral(10), IntegerLiteral(25)), 27)
         self.check(BinaryOperator('&', IntegerLiteral(10), IntegerLiteral(25)), 8)
 
