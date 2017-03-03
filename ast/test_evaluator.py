@@ -62,6 +62,7 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('1+(3|4)+50', 58)
 
     def test_precedence(self):
+        self.parse_check('1 - 2 + 3', 2)
         self.parse_check('1 + 2 * 3', 7)
         self.parse_check('2 * 3 + 1', 7)
         self.parse_check('1 + 6 / 3', 3)

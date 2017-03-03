@@ -13,8 +13,8 @@ precedence = (
     ('left', 'DIFF'),
     ('left', 'INFEQU'),
     ('left', 'SUPEQU'),
-    ('left', 'MINUS'),
     ('left', 'PLUS'),
+    ('left', 'MINUS'),
     ('left', 'DIV'),
     ('left', 'TIMES')
 )
@@ -28,8 +28,8 @@ def p_expression_binop(p):
                   | expression DIFF expression
                   | expression INFEQU expression
                   | expression SUPEQU expression
-                  | expression MINUS expression
                   | expression PLUS expression
+                  | expression MINUS expression
                   | expression DIV expression
                   | expression TIMES expression'''
     p[0] = BinaryOperator(p[2], p[1], p[3])
