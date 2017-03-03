@@ -70,5 +70,11 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('6 & 3 + 1', 4)
         self.parse_check('6 < 3 + 9', 1)
 
+    def test_condition(self):
+        self.parse_check('if 5=5 then 2 else 3', 2)
+        self.parse_check('if 5<>5 then 2 else 3', 3)
+        self.parse_check('if 1<2 then 2+5 else 5+5', 7)
+        self.parse_check('if 9<5 then 2+5 else 10+5', 15)
+
 if __name__ == '__main__':
     unittest.main()
