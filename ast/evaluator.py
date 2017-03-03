@@ -22,9 +22,9 @@ class Evaluator:
         elif op == '/':
             return int(left / right)
         elif op == '|':
-            return left | right
+            return 1 if left or right else 0
         elif op == '&':
-            return left & right
+            return 1 if left and right else 0
         elif op == '<':
             return (left < right)*1
         elif op == '>':
