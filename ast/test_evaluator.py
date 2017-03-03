@@ -68,6 +68,7 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('2 * 3 + 1', 7)
         self.parse_check('1 + 6 / 3', 3)
         self.parse_check('6 / 3 + 1', 3)
+        self.parse_check('3 / 3 * 4', 4)
         self.parse_check('6 | 3 + 1', 6)
         self.parse_check('6 & 3 + 1', 4)
         self.parse_check('6 < 3 + 9', 1)
