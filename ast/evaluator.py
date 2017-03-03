@@ -24,7 +24,8 @@ class Evaluator:
         elif op == '|':
             return 1 if left or right else 0
         elif op == '&':
-            return 1 if left and right else 0
+            #si la partie gauche est fausse, alors on n'évalue pas la suite.
+            return 0 if left == 0 else (1 if left and right else 0)
         elif op == '<':
             return (left < right)*1
         elif op == '>':
