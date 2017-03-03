@@ -7,7 +7,7 @@ tokens = tokenizer.tokens
 precedence = (
     ('left', 'OR'),
     ('left', 'AND'),
-    ('left', 'INF', 'SUP', 'EQU', 'DIFF', 'INFEQU', 'SUPEQU'),
+    ('nonassoc', 'INF', 'SUP', 'EQU', 'DIFF', 'INFEQU', 'SUPEQU'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIV')
 )

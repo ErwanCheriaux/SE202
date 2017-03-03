@@ -72,6 +72,10 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('6 | 3 + 1', 6)
         self.parse_check('6 & 3 + 1', 4)
         self.parse_check('6 < 3 + 9', 1)
+        try:
+            self.parse_check('15 = 15 = 1', 0)
+        except:
+            raise Exception("15 = 15 = 1 non valide")
 
     def test_condition(self):
         self.parse_check('if 5=5 then 2 else 3', 2)
