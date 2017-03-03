@@ -16,6 +16,8 @@ class TestDumper(unittest.TestCase):
         self.check("42", "42")
 
     def test_priority(self):
+        self.check("3+1-2", "((3 + 1) - 2)")
+        self.check("3-1+2", "((3 - 1) + 2)")
         self.check("3-1-2", "((3 - 1) - 2)")
 
         self.check("1+2*3", "(1 + (2 * 3))")
@@ -50,8 +52,6 @@ class TestDumper(unittest.TestCase):
 
         self.check("1+2<>3", "((1 + 2) <> 3)")
         self.check("2<>3+1", "(2 <> (3 + 1))")
-
-        self.check("1|4&8+4-2<12", "(1 | (4 & ((8 + (4 - 2)) < 12)))")
 
         self.check("if 5=5 then 2 else 3", "if (5 = 5) then 2 else 3")
         self.check("if 5<>5 then 2+5 else 5+5", "if (5 <> 5) then (2 + 5) else (5 + 5)")

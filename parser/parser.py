@@ -7,16 +7,9 @@ tokens = tokenizer.tokens
 precedence = (
     ('left', 'OR'),
     ('left', 'AND'),
-    ('left', 'INF'),
-    ('left', 'SUP'),
-    ('left', 'EQU'),
-    ('left', 'DIFF'),
-    ('left', 'INFEQU'),
-    ('left', 'SUPEQU'),
-    ('left', 'PLUS'),
-    ('left', 'MINUS'),
-    ('left', 'TIMES'),
-    ('left', 'DIV')
+    ('left', 'INF', 'SUP', 'EQU', 'DIFF', 'INFEQU', 'SUPEQU'),
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIV')
 )
 
 def p_expression_binop(p):
