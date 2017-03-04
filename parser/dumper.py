@@ -27,10 +27,13 @@ class Dumper(Visitor):
 
     @visitor(IfThenElse)
     def visit(self, c):
-        # Always use parentheses to reflect grouping and associativity, even if they may
-        # be superfluous.
         return "if %s then %s else %s" % \
                 (c.condition.accept(self), c.then_part.accept(self), c.else_part.accept(self))
+
+    @visitor(VarDecl)
+    def visit(self, var):
+        return "var %s := %s" % \
+                (var.name.accept(self), var.exp.accept(self))
 
     @visitor(Identifier)
     def visit(self, id):

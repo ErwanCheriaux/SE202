@@ -60,6 +60,11 @@ class Evaluator:
         else:
             return c.else_part.accept(self)
 
+    @visitor(VarDecl)
+    def visit(self, var):
+        name = var.name.accept(self)
+        return var.exp.accept(self)
+
     @visitor(None)
     def visit(self, node):
         raise SyntaxError("no evaluation defined for %s" % node)
