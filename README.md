@@ -14,3 +14,9 @@ Pour tester if/then/else entrez la commande:
 ./tiger.py -e -E"if 0 then 2 else 3"
 
 La structure if/then/else fonctionne. Cependant, la composition if/then n'est pas géré.
+
+L'étape 1 est validé après plusieurs tentative car le code est soumis a de nombreux tests unitaires lors du push sur le dépot git distant.
+
+# Step 2
+
+Il s'agit ici d'implémenter les variables INT et fonction ainsi que la gestion des commentaires et du moins unaire.

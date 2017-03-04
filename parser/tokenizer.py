@@ -24,13 +24,17 @@ keywords = {'array': 'ARRAY',
 reserved = {
    'if' : 'IF',
    'then' : 'THEN',
-   'else' : 'ELSE'
+   'else' : 'ELSE',
+   'let': 'LET',
+   'in': 'IN',
+   'end': 'END',
+   'var': 'VAR',
+   'function': 'FUNCTION'
 }
 
 # List of tokens that can be recognized and are handled by the current
 # grammar rules.
-tokens = ('END', 'IN', 'LET', 'VAR',
-          'PLUS', 'MINUS', 'TIMES', 'DIV', 'OR', 'AND',
+tokens = ('PLUS', 'MINUS', 'TIMES', 'DIV', 'OR', 'AND',
           'INF', 'SUP', 'INFEQU', 'SUPEQU', 'EQU', 'DIFF',
           'COMMA', 'SEMICOLON',
           'LPAREN', 'RPAREN',
@@ -56,9 +60,14 @@ t_ASSIGN    = r':='
 t_COMMA     = r','
 t_SEMICOLON = r';'
 
-t_IF   = r'if'
-t_THEN = r'then'
-t_ELSE = r'else'
+t_IF       = r'if'
+t_THEN     = r'then'
+t_ELSE     = r'else'
+t_LET      = r'let'
+t_IN       = r'in'
+t_END      = r'end'
+t_VAR      = r'var'
+t_FUNCTION = r'function'
 
 t_ignore = ' \t'
 
