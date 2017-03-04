@@ -52,12 +52,11 @@ class Evaluator:
     @visitor(IfThenElse)
     def visit(self, c):
         condition = c.condition.accept(self)
-        then_part = c.then_part.accept(self)
 
         if type(condition) != int:
             raise SyntaxError("wrong condition %s" % condition)
         elif condition != 0:
-            return then_part
+            return c.then_part.accept(self)
         else:
             return c.else_part.accept(self)
 
