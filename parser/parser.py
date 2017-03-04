@@ -49,6 +49,15 @@ def p_decls(p):
              | decls decl'''
     p[0] = [p[1]] if len(p) == 2 else p[1] + [p[2]]
 
+def p_decl(p):
+    '''decl : vardecl
+            | fundecl'''
+    p[0] = Decl(p[1])
+
+def p_vardecl(p):
+    '''vardecl : VAR ID ASSIGN expression'''
+    p[0] = VarDecl(p[2], None, p[4])
+
 def p_args(p):
     '''args :
             | argssome'''
