@@ -45,11 +45,10 @@ class TestEvaluator(unittest.TestCase):
         self.check(BinaryOperator('=',  IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 0)
         self.check(BinaryOperator('<>', IntegerLiteral(21), BinaryOperator('+', IntegerLiteral(10),  IntegerLiteral(5))), 1)
 
-        #self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   27)
-        #self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   10)
-        #self.check(BinaryOperator('&', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   8)
-        #self.check(BinaryOperator('&', IntegerLiteral(10), BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   0)
-        #self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('&', IntegerLiteral(57), IntegerLiteral(29))), 27)
+        self.check(BinaryOperator('|', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   1)
+        self.check(BinaryOperator('|', IntegerLiteral(0),  BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   0)
+        self.check(BinaryOperator('&', IntegerLiteral(10), BinaryOperator('*', IntegerLiteral(5), IntegerLiteral(5))),   1)
+        self.check(BinaryOperator('&', IntegerLiteral(1),  BinaryOperator('<', IntegerLiteral(5), IntegerLiteral(5))),   0)
 
     def test_parse_literal(self):
         self.parse_check('42', 42)
@@ -60,7 +59,6 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('1+(2+2)/4', 2)
         self.parse_check('1+(2<2)+50', 51)
         self.parse_check('1+(2=2)+50', 52)
-        #self.parse_check('1+(3|4)+50', 58)
 
     def test_precedence(self):
         self.parse_check('1 - 2 + 3', 2)
@@ -69,8 +67,9 @@ class TestEvaluator(unittest.TestCase):
         self.parse_check('1 + 6 / 3', 3)
         self.parse_check('6 / 3 + 1', 3)
         self.parse_check('3 / 3 * 4', 4)
-        #self.parse_check('6 | 3 + 1', 6)
-        #self.parse_check('6 & 3 + 1', 4)
+        self.parse_check('6 | 3 + 1', 1)
+        self.parse_check('6 & 0 * 5', 0)
+        self.parse_check('0 & 4 / 0', 0)
         self.parse_check('6 < 3 + 9', 1)
 
     def test_condition(self):

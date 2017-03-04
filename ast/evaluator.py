@@ -11,8 +11,17 @@ class Evaluator:
 
     @visitor(BinaryOperator)
     def visit(self, binop):
-        left, right = binop.left.accept(self), binop.right.accept(self)
-        op = binop.op
+        left  = binop.left.accept(self)
+        op    = binop.op
+
+        #permets de ne pas analyser la partie droite si ce n'est pas nécessaire
+        if op == '&' and left == 0:
+            return 0
+        elif op == '|' and left != 0:
+            return 1
+
+        right = binop.right.accept(self)
+
         if op == '+':
             return left + right
         elif op == '-':
@@ -24,8 +33,7 @@ class Evaluator:
         elif op == '|':
             return 1 if left or right else 0
         elif op == '&':
-            #si la partie gauche est fausse, alors on n'évalue pas la suite.
-            return 0 if left == 0 else (1 if left and right else 0)
+            return 1 if left and right else 0
         elif op == '<':
             return (left < right)*1
         elif op == '>':
@@ -46,7 +54,6 @@ class Evaluator:
         condition = c.condition.accept(self)
         then_part = c.then_part.accept(self)
         else_part = c.else_part.accept(self)
-        children  = c.children
 
         if type(condition) != int:
             raise SyntaxError("wrong condition %s" % condition)
