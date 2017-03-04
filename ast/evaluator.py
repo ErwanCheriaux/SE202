@@ -53,14 +53,13 @@ class Evaluator:
     def visit(self, c):
         condition = c.condition.accept(self)
         then_part = c.then_part.accept(self)
-        else_part = c.else_part.accept(self)
 
         if type(condition) != int:
             raise SyntaxError("wrong condition %s" % condition)
         elif condition != 0:
             return then_part
         else:
-            return else_part
+            return c.else_part.accept(self)
 
     @visitor(None)
     def visit(self, node):
