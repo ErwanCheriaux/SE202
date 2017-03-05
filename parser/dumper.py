@@ -38,12 +38,12 @@ class Dumper(Visitor):
     @visitor(VarDecl)
     def visit(self, var):
         return "var %s := %s" % \
-                (var.name.accept(self), var.exp.accept(self))
+                (var.name, var.exp.accept(self))
 
     @visitor(FunDecl)
     def visit(self, fun):
         return "function %s(%s) %s = %s" % \
-                (fun.name.accept(self), fun.args.accept(self), fun.type.accept(self), fun.exp.accept(self))
+                (fun.name, fun.args.accept(self), fun.type.accept(self), fun.exp.accept(self))
 
     @visitor(Identifier)
     def visit(self, id):
