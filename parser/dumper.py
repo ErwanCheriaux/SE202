@@ -40,6 +40,11 @@ class Dumper(Visitor):
         return "var %s := %s" % \
                 (var.name.accept(self), var.exp.accept(self))
 
+    @visitor(FunDecl)
+    def visit(self, fun):
+        return "function %s(%s) %s = %s" % \
+                (fun.name.accept(self), fun.args.accept(self), fun.type.accept(self), fun.exp.accept(self))
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics:

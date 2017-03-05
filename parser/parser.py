@@ -54,12 +54,17 @@ def p_decls(p):
     p[0] = [p[1]] if len(p) == 2 else p[1] + [p[2]]
 
 def p_decl(p):
-    '''decl : vardecl'''
+    '''decl : vardecl
+            | fundecl'''
     p[0] = Decl()
 
 def p_vardecl(p):
     '''vardecl : VAR ID ASSIGN expression'''
     p[0] = VarDecl(p[2], None, p[4])
+
+def p_fundecl(p):
+    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression'''
+    p[0] = FunDecl(p[2], p[4], None, p[7])
 
 def p_args(p):
     '''args :
