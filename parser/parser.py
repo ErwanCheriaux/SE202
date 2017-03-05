@@ -13,10 +13,6 @@ precedence = (
     ('left', 'TIMES', 'DIV')
 )
 
-def p_expression_ifthenelse(p):
-    '''expression : IF expression THEN expression ELSE expression'''
-    p[0] = IfThenElse(p[2], p[4], p[6])
-
 def p_expression_binop(p):
     '''expression : expression OR expression
                   | expression AND expression
@@ -32,6 +28,10 @@ def p_expression_binop(p):
                   | expression DIV expression'''
     p[0] = BinaryOperator(p[2], p[1], p[3])
 
+def p_expression_ifthenelse(p):
+    '''expression : IF expression THEN expression ELSE expression'''
+    p[0] = IfThenElse(p[2], p[4], p[6])
+
 def p_expression_parentheses(p):
     'expression : LPAREN expression RPAREN'
     p[0] = p[2]
@@ -44,15 +44,18 @@ def p_expression_identifier(p):
     'expression : ID'
     p[0] = Identifier(p[1])
 
+def p_expression_let(p):
+    '''expression : LET decls IN expression END'''
+    p[0] = Let([p[2]], [p[4]])
+
 def p_decls(p):
     '''decls : decl
              | decls decl'''
     p[0] = [p[1]] if len(p) == 2 else p[1] + [p[2]]
 
 def p_decl(p):
-    '''decl : vardecl
-            | fundecl'''
-    p[0] = Decl(p[1])
+    '''decl : vardecl'''
+    p[0] = Decl()
 
 def p_vardecl(p):
     '''vardecl : VAR ID ASSIGN expression'''

@@ -30,6 +30,11 @@ class Dumper(Visitor):
         return "if %s then %s else %s" % \
                 (c.condition.accept(self), c.then_part.accept(self), c.else_part.accept(self))
 
+    @visitor(Let)
+    def visit(self, let):
+        return "let %s in %s end" % \
+                (let.decls.accept(self), let.exps.accept(self))
+
     @visitor(VarDecl)
     def visit(self, var):
         return "var %s := %s" % \
