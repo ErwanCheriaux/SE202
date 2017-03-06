@@ -56,7 +56,11 @@ class Dumper(Visitor):
         a = ""
         for arg in fun.args:
             a += arg.accept(self)
-        return "function %s(%s) %s = %s" % \
+        if fun.type == None:
+            return "function %s(%s) = %s" % \
+                (fun.name, a, fun.exp.accept(self))
+        else:
+            return "function %s(%s): %s = %s" % \
                 (fun.name, a, fun.type.accept(self), fun.exp.accept(self))
 
     @visitor(Identifier)

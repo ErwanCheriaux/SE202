@@ -67,8 +67,12 @@ def p_vardecl(p):
         p[0] = VarDecl(p[2], p[4], p[6])
 
 def p_fundecl(p):
-    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression'''
-    p[0] = FunDecl(p[2], [p[4]], None, p[7])
+    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression
+               | FUNCTION ID LPAREN args RPAREN COLON type EQU expression'''
+    if len(p) == 8:
+        p[0] = FunDecl(p[2], p[4], None, p[7])
+    else:
+        p[0] = FunDecl(p[2], p[4], p[7], p[9])
 
 def p_args(p):
     '''args :
