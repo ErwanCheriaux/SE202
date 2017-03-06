@@ -63,6 +63,7 @@ class TestDumper(unittest.TestCase):
         self.check("let function f() = 1+2 in 1 end", "let function f() = (1 + 2) in 1 end")
         self.check("let function f(): int = 1 + 2 in 1 end", "let function f(): int = (1 + 2) in 1 end")
         self.check("let function f(a: int) = 1 in 1 end", "let function f(a: int) = 1 in 1 end")
+        self.check("let function f(a: int, b: int, c: int) = 1 in 1 end", "let function f(a: int, b: int, c: int) = 1 in 1 end")
 
 if __name__ == '__main__':
     unittest.main()

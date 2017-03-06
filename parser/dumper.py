@@ -57,7 +57,8 @@ class Dumper(Visitor):
     def visit(self, fun):
         a = ""
         for arg in fun.args:
-            a += arg.accept(self)
+            a += arg.accept(self) + ', '
+        a = a[:-2]
         if fun.type == None:
             return "function %s(%s) = %s" % \
                 (fun.name, a, fun.exp.accept(self))
