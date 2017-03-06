@@ -64,7 +64,7 @@ def p_vardecl(p):
 
 def p_fundecl(p):
     '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression'''
-    p[0] = FunDecl(p[2], p[4], None, p[7])
+    p[0] = FunDecl(p[2], [p[4]], None, p[7])
 
 def p_args(p):
     '''args :
@@ -72,9 +72,17 @@ def p_args(p):
     p[0] = p[1] if len(p) == 2 else []
 
 def p_argssome(p):
-    '''argssome : expression
-                | argssome COMMA expression'''
+    '''argssome : arg
+                | argssome COMMA arg'''
     p[0] = [p[1]] if len(p) == 2 else p[1] + [p[3]]
+
+def p_arg(p):
+    '''arg : ID COLON type'''
+    p[0] = VarDecl(p[1], p[3], None)
+
+def p_type(p):
+    '''type : INT'''
+    p[0] = Type(p[1])
 
 def p_error(p):
     import sys

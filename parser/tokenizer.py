@@ -29,7 +29,8 @@ reserved = {
    'in': 'IN',
    'end': 'END',
    'var': 'VAR',
-   'function': 'FUNCTION'
+   'function': 'FUNCTION',
+   'int': 'INT'
 }
 
 # List of tokens that can be recognized and are handled by the current
@@ -68,6 +69,7 @@ t_IN       = r'in'
 t_END      = r'end'
 t_VAR      = r'var'
 t_FUNCTION = r'function'
+t_INT      = r'int'
 
 t_ignore = ' \t'
 
