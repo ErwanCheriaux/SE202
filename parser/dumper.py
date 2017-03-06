@@ -40,14 +40,24 @@ class Dumper(Visitor):
             e += exp.accept(self)
         return "let %s in %s end" % (d, e)
 
+    @visitor(Type)
+    def visit(self, type):
+        return "%s" % (type.typename)
+
     @visitor(VarDecl)
     def visit(self, var):
-        return "var %s := %s" % (var.name, var.exp.accept(self))
+        if var.type == None:
+            return "var %s := %s" % (var.name, var.exp.accept(self))
+        else:
+            return "var %s: %s := %s" % (var.name, var.type.accept(self), var.exp.accept(self))
 
     @visitor(FunDecl)
     def visit(self, fun):
+        a = ""
+        for arg in fun.args:
+            a += arg.accept(self)
         return "function %s(%s) %s = %s" % \
-                (fun.name, fun.args.accept(self), fun.type.accept(self), fun.exp.accept(self))
+                (fun.name, a, fun.type.accept(self), fun.exp.accept(self))
 
     @visitor(Identifier)
     def visit(self, id):

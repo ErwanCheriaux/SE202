@@ -59,8 +59,12 @@ def p_decl(p):
     p[0] = p[1]
 
 def p_vardecl(p):
-    '''vardecl : VAR ID ASSIGN expression'''
-    p[0] = VarDecl(p[2], None, p[4])
+    '''vardecl : VAR ID ASSIGN expression
+               | VAR ID COLON type ASSIGN expression'''
+    if len(p) == 5:
+        p[0] = VarDecl(p[2], None, p[4])
+    else:
+        p[0] = VarDecl(p[2], p[4], p[6])
 
 def p_fundecl(p):
     '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression'''
