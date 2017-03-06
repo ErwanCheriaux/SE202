@@ -48,6 +48,8 @@ class Dumper(Visitor):
     def visit(self, var):
         if var.type == None:
             return "var %s := %s" % (var.name, var.exp.accept(self))
+        elif var.exp == None:
+            return "%s: %s" % (var.name, var.type.accept(self))
         else:
             return "var %s: %s := %s" % (var.name, var.type.accept(self), var.exp.accept(self))
 
