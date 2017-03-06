@@ -46,7 +46,7 @@ def p_expression_identifier(p):
 
 def p_expression_let(p):
     '''expression : LET decls IN expression END'''
-    p[0] = Let([p[2]], [p[4]])
+    p[0] = Let(p[2], [p[4]])
 
 def p_decls(p):
     '''decls : decl
@@ -56,7 +56,7 @@ def p_decls(p):
 def p_decl(p):
     '''decl : vardecl
             | fundecl'''
-    p[0] = Decl()
+    p[0] = p[1]
 
 def p_vardecl(p):
     '''vardecl : VAR ID ASSIGN expression'''

@@ -56,5 +56,8 @@ class TestDumper(unittest.TestCase):
         self.check("if 5=5 then 2 else 3", "if (5 = 5) then 2 else 3")
         self.check("if 5<>5 then 2+5 else 5+5", "if (5 <> 5) then (2 + 5) else (5 + 5)")
 
+        self.check("let var a := 5 in a end", "let var a := 5 in a end")
+        self.check("let var a := 5-2 in a+45 end", "let var a := (5 - 2) in (a + 45) end")
+
 if __name__ == '__main__':
     unittest.main()

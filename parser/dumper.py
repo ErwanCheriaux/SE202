@@ -32,13 +32,17 @@ class Dumper(Visitor):
 
     @visitor(Let)
     def visit(self, let):
-        return "let %s in %s end" % \
-                (let.decls.accept(self), let.exps.accept(self))
+        d = ""
+        e = ""
+        for decl in let.decls:
+            d += decl.accept(self)
+        for exp  in let.exps:
+            e += exp.accept(self)
+        return "let %s in %s end" % (d, e)
 
     @visitor(VarDecl)
     def visit(self, var):
-        return "var %s := %s" % \
-                (var.name, var.exp.accept(self))
+        return "var %s := %s" % (var.name, var.exp.accept(self))
 
     @visitor(FunDecl)
     def visit(self, fun):
