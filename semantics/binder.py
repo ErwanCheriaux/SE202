@@ -73,12 +73,20 @@ class Binder(Visitor):
     @visitor(Let)
     def visit(self, let):
         self.push_new_scope()
-
-    @visitor(FunDecl)
-    def visit(self, fun):
-        self.push_new_scope()
-        self.add_binding(fun)
+        for decl in let.decls:
+            decl.accept(self)
+        for exp  in let.exps:
+            exp.accept(self)
+        self.pop_scope()
 
     @visitor(VarDecl)
     def visit(self, var):
         self.add_binding(var)
+
+    @visitor(Identifier)
+    def visit(self, id):
+        self.lookup(id)
+
+    @visitor(IntegerLiteral)
+    def visit(self, i):
+        pass
