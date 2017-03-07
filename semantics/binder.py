@@ -87,7 +87,8 @@ class Binder(Visitor):
 
     @visitor(VarDecl)
     def visit(self, var):
-        var.exp.accept(self)
+        if var.exp != None:
+            var.exp.accept(self)
         self.add_binding(var)
 
     @visitor(BinaryOperator)
@@ -107,6 +108,8 @@ class Binder(Visitor):
     def visit(self, fun):
         self.add_binding(fun)
         self.push_new_scope()
+        for arg in fun.args:
+            arg.accept(self)
         fun.exp.accept(self)
         self.pop_scope()
 
