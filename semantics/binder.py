@@ -65,3 +65,20 @@ class Binder(Visitor):
                 return decl
         else:
             raise BindException("name not found: %s" % name)
+
+    @visitor(None)
+    def visit(self, node):
+        raise Exception("unable to bind %s" % node)
+
+    @visitor(Let)
+    def visit(self, let):
+        self.push_new_scope()
+
+    @visitor(FunDecl)
+    def visit(self, fun):
+        self.push_new_scope()
+        self.add_binding(fun)
+
+    @visitor(VarDecl)
+    def visit(self, var):
+        self.add_binding(var)
