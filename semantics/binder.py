@@ -81,6 +81,7 @@ class Binder(Visitor):
 
     @visitor(VarDecl)
     def visit(self, var):
+        var.exp.accept(self)
         self.add_binding(var)
 
     @visitor(Identifier)
