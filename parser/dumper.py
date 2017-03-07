@@ -35,10 +35,10 @@ class Dumper(Visitor):
         d = ""
         e = ""
         for decl in let.decls:
-            d += decl.accept(self)
+            d += decl.accept(self) + ' '
         for exp  in let.exps:
             e += exp.accept(self)
-        return "let %s in %s end" % (d, e)
+        return "let %sin %s end" % (d, e)
 
     @visitor(Type)
     def visit(self, type):
