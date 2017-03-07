@@ -92,6 +92,24 @@ def p_type(p):
     '''type : INT'''
     p[0] = Type(p[1])
 
+def p_expression_funcall(p):
+    '''expression : ID LPAREN params RPAREN'''
+    p[0] = FunCall(Identifier(p[1]), p[3])
+
+def p_params(p):
+    '''params :
+              | paramssome'''
+    p[0] = p[1] if len(p) == 2 else []
+
+def p_paramssome(p):
+    '''paramssome : param
+                  | paramssome COMMA param'''
+    p[0] = [p[1]] if len(p) == 2 else p[1] + [p[3]]
+
+def p_param(p):
+    '''param : expression'''
+    p[0] = p[1]
+
 def p_error(p):
     import sys
     sys.stderr.write("no way to analyze %s\n" % p)

@@ -66,6 +66,14 @@ class Dumper(Visitor):
             return "function %s(%s): %s = %s" % \
                 (fun.name, a, fun.type.accept(self), fun.exp.accept(self))
 
+    @visitor(FunCall)
+    def visit(self, fun):
+        p = ""
+        for param in fun.params:
+            p += param.accept(self) + ', '
+        p = p[:-2]
+        return "%s(%s)" % (fun.identifier.accept(self), p)
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics:

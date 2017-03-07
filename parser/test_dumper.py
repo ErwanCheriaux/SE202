@@ -61,6 +61,8 @@ class TestDumper(unittest.TestCase):
         self.check("let var a := 5 var b := 5 in a+b end", "let var a := 5 var b := 5 in (a + b) end")
 
         self.check("let function f() = 1+2 in 1 end", "let function f() = (1 + 2) in 1 end")
+        self.check("let function f() = 1 in f() end", "let function f() = 1 in f() end")
+        self.check("let function f(a:int, b:int) = a+b in f(4,5) end", "let function f(a: int, b: int) = (a + b) in f(4, 5) end")
         self.check("let function f(): int = 1 + 2 in 1 end", "let function f(): int = (1 + 2) in 1 end")
         self.check("let function f(a: int) = 1 in 1 end", "let function f(a: int) = 1 in 1 end")
         self.check("let function f(a: int, b: int, c: int) = 1 in 1 end", "let function f(a: int, b: int, c: int) = 1 in 1 end")
