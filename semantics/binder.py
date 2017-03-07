@@ -79,10 +79,21 @@ class Binder(Visitor):
             exp.accept(self)
         self.pop_scope()
 
+    @visitor(IfThenElse)
+    def visit(self, c):
+        c.condition.accept(self)
+        c.then_part.accept(self)
+        c.else_part.accept(self)
+
     @visitor(VarDecl)
     def visit(self, var):
         var.exp.accept(self)
         self.add_binding(var)
+
+    @visitor(BinaryOperator)
+    def visit(self, binop):
+        binop.left.accept(self)
+        binop.right.accept(self)
 
     @visitor(Identifier)
     def visit(self, id):
