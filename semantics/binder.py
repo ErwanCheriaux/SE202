@@ -90,3 +90,14 @@ class Binder(Visitor):
     @visitor(IntegerLiteral)
     def visit(self, i):
         pass
+
+    @visitor(FunDecl)
+    def visit(self, fun):
+        self.add_binding(fun)
+        self.push_new_scope()
+        fun.exp.accept(self)
+        self.pop_scope()
+
+    @visitor(FunCall)
+    def visit(self, fun):
+        self.lookup(fun.identifier)
