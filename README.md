@@ -19,4 +19,4 @@ L'étape 1 est validé après plusieurs tentative car le code est soumis a de no
 
 # Step 2
 
-Il s'agit ici d'implémenter les variables INT et fonction ainsi que la gestion des commentaires et du moins unaire.
+Il s'agit ici d'implémenter les déclaration de variables et de fonction, gérer le type INT, les commentaires et le moins unaire. Enfin, il faut veiller à ce que la sémentique soit réspecté tel que l'utilisation de variable déclaré en amont.
