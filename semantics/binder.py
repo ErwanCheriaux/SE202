@@ -116,4 +116,4 @@ class Binder(Visitor):
     @visitor(FunCall)
     def visit(self, fun):
         if len(self.lookup(fun.identifier).args) != len(fun.params):
-            raise BindException("Not the right number of param for the function: %s" % decl.name)
+            raise BindException("Not the right number of param for the function: %s" % fun.identifier.name)
