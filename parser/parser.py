@@ -13,6 +13,11 @@ precedence = (
     ('left', 'TIMES', 'DIV')
 )
 
+def p_expression_comment(p):
+    '''expression : COMMENT expression newline
+                  | STARTCOMMENT expression ENDCOMMENT'''
+    p[0] = None
+
 def p_expression_binop(p):
     '''expression : expression OR expression
                   | expression AND expression

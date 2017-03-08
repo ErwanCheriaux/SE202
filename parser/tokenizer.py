@@ -37,9 +37,9 @@ reserved = {
 # grammar rules.
 tokens = ('PLUS', 'MINUS', 'TIMES', 'DIV', 'OR', 'AND',
           'INF', 'SUP', 'INFEQU', 'SUPEQU', 'EQU', 'DIFF',
-          'COMMA', 'SEMICOLON',
+          'COMMA', 'COMMENT', 'STARTCOMMENT', 'ENDCOMMENT',
           'LPAREN', 'RPAREN',
-          'NUMBER', 'ID',
+          'NUMBER', 'ID', 'newline',
           'COLON', 'ASSIGN') + tuple(reserved.values())
 
 t_PLUS      = r'\+'
@@ -59,7 +59,10 @@ t_RPAREN    = r'\)'
 t_COLON     = r':'
 t_ASSIGN    = r':='
 t_COMMA     = r','
-t_SEMICOLON = r';'
+
+t_COMMENT       = r'\/\/'
+t_STARTCOMMENT  = r'\/\*'
+t_ENDCOMMENT    = r'\*\/'
 
 t_IF       = r'if'
 t_THEN     = r'then'
