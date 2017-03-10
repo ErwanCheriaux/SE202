@@ -30,12 +30,10 @@ class Binder(Visitor):
     def push_new_scope(self):
         """Push a new scope on the scopes stack."""
         self.scopes.append({})
-        self.depth += 1
 
     def pop_scope(self):
         """Pop a scope from the scopes stack."""
         del self.scopes[-1]
-        self.depth -= 1
 
     def current_scope(self):
         """Return the current scope."""
@@ -114,10 +112,12 @@ class Binder(Visitor):
     def visit(self, fun):
         self.add_binding(fun)
         self.push_new_scope()
+        self.depth += 1
         for arg in fun.args:
             arg.accept(self)
         fun.exp.accept(self)
         self.pop_scope()
+        self.depth -= 1
 
     @visitor(FunCall)
     def visit(self, fun):
