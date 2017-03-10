@@ -1,5 +1,9 @@
 import ply.lex as lex
 
+states = (
+   ('ccomment','exclusive'),
+)
+
 # List of keywords. Each keyword will be return as a token of a specific
 # type, which makes it easier to match it in grammatical rules.
 keywords = {'array': 'ARRAY',
@@ -37,9 +41,9 @@ reserved = {
 # grammar rules.
 tokens = ('PLUS', 'MINUS', 'TIMES', 'DIV', 'OR', 'AND',
           'INF', 'SUP', 'INFEQU', 'SUPEQU', 'EQU', 'DIFF',
-          'COMMA', 'COMMENT', 'STARTCOMMENT', 'ENDCOMMENT',
+          'COMMA', 'SEMICOLON',
           'LPAREN', 'RPAREN',
-          'NUMBER', 'ID', 'newline',
+          'NUMBER', 'ID',
           'COLON', 'ASSIGN') + tuple(reserved.values())
 
 t_PLUS      = r'\+'
@@ -57,12 +61,9 @@ t_DIFF      = r'\<\>'
 t_LPAREN    = r'\('
 t_RPAREN    = r'\)'
 t_COLON     = r':'
+t_SEMICOLON = r';'
 t_ASSIGN    = r':='
 t_COMMA     = r','
-
-t_COMMENT       = r'\/\/'
-t_STARTCOMMENT  = r'\/\*'
-t_ENDCOMMENT    = r'\*\/'
 
 t_IF       = r'if'
 t_THEN     = r'then'
@@ -101,5 +102,16 @@ def t_NUMBER(t):
 
 def t_error(t):
     raise lex.LexError("unknown token %s" % t.value, t.value)
+
+def t_ccomment(t):
+    r'(/\*(.|\n)*?\*/)|(//.*)'
+
+def t_ANY_begin_ccomment(t):
+    r'start_ccomment'
+    t.lexer.push_state('ccomment')
+
+def t_ANY_end_ccomment(t):
+    r'end_ccomment'
+    t.lexer.pop_state()
 
 lexer = lex.lex()
