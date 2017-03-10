@@ -78,7 +78,7 @@ class Dumper(Visitor):
     def visit(self, id):
         if self.semantics:
             diff = id.depth - id.decl.depth
-            scope_diff = "{%d}" % diff if diff else ''
+            scope_diff = "/*%d*/" % diff if diff else ''
         else:
             scope_diff = ''
         return '%s%s' % (id.name, scope_diff)

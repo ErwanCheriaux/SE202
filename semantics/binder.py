@@ -30,10 +30,12 @@ class Binder(Visitor):
     def push_new_scope(self):
         """Push a new scope on the scopes stack."""
         self.scopes.append({})
+        self.depth += 1
 
     def pop_scope(self):
         """Pop a scope from the scopes stack."""
         del self.scopes[-1]
+        self.depth -= 1
 
     def current_scope(self):
         """Return the current scope."""
@@ -70,6 +72,15 @@ class Binder(Visitor):
     def visit(self, node):
         raise Exception("unable to bind %s" % node)
 
+    @visitor(IntegerLiteral)
+    def visit(self, i):
+        pass
+
+    @visitor(BinaryOperator)
+    def visit(self, binop):
+        binop.left.accept(self)
+        binop.right.accept(self)
+
     @visitor(Let)
     def visit(self, let):
         self.push_new_scope()
@@ -79,30 +90,25 @@ class Binder(Visitor):
             exp.accept(self)
         self.pop_scope()
 
+    @visitor(Identifier)
+    def visit(self, id):
+        self.lookup(id)
+
     @visitor(IfThenElse)
     def visit(self, c):
         c.condition.accept(self)
         c.then_part.accept(self)
         c.else_part.accept(self)
 
+    @visitor(Type)
+    def visit(self):
+        pass
+
     @visitor(VarDecl)
     def visit(self, var):
         if var.exp != None:
             var.exp.accept(self)
         self.add_binding(var)
-
-    @visitor(BinaryOperator)
-    def visit(self, binop):
-        binop.left.accept(self)
-        binop.right.accept(self)
-
-    @visitor(Identifier)
-    def visit(self, id):
-        self.lookup(id)
-
-    @visitor(IntegerLiteral)
-    def visit(self, i):
-        pass
 
     @visitor(FunDecl)
     def visit(self, fun):
