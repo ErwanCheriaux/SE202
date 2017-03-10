@@ -77,7 +77,7 @@ class Dumper(Visitor):
 
     @visitor(Identifier)
     def visit(self, id):
-        if self.semantics:
+        if self.semantics and type(id.decl) is VarDecl:
             diff = id.depth - id.decl.depth
             scope_diff = "/*%d*/" % diff if diff else ''
         else:
