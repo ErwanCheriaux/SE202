@@ -90,36 +90,9 @@ class Binder(Visitor):
 
     @visitor(Identifier)
     def visit(self, id):
-        print ('<<<<<<<<<<<<<<<<<<<<<<<<<<<')
-        print ('id:')
-        print (id)
-        print ('name:')
-        print (id.name)
-        print ('decl:')
-        print (id.decl)
-        print ('depth:')
-        print (id.depth)
         self.lookup(id)
-        print ('===========================')
-        print ('id:')
-        print (id)
-        print ('name:')
-        print (id.name)
-        print ('decl:')
-        print (id.decl)
-        print ('depth:')
-        print (id.depth)
-        print ('decl name:')
-        print (id.decl.name)
-        print ('decl args:')
-        print (id.decl.args)
-        print ('decl type:')
-        print (id.decl.type)
-        print ('decl exp:')
-        print (id.decl.exp)
-        print ('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-        #if type(id.decl) is FunDecl:
-        #    id.decl.param.check(self)
+        if type(id.decl) is FunDecl:
+            raise BindException("Is not a variable: %s" % id.name)
 
     @visitor(IfThenElse)
     def visit(self, c):
@@ -150,8 +123,8 @@ class Binder(Visitor):
 
     @visitor(FunCall)
     def visit(self, fun):
-        fun.identifier.accept(self)
+        fun.identifier.decl = self.lookup(fun.identifier)
         if type(fun.identifier.decl) is not FunDecl:
             raise BindException("Is not a function: %s" % fun.identifier.name)
-        if len(self.lookup(fun.identifier).args) != len(fun.params):
+        if len(fun.identifier.decl.args) != len(fun.params):
             raise BindException("Not the right number of param for the function: %s" % fun.identifier.name)
