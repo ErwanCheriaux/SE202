@@ -103,15 +103,24 @@ def t_NUMBER(t):
 def t_error(t):
     raise lex.LexError("unknown token %s" % t.value, t.value)
 
-def t_ccomment(t):
-    r'(/\*(.|\n)*?\*/)|(//.*)'
+def t_ligne_comment(t):
+    r'(//.*)'
 
 def t_ANY_begin_ccomment(t):
-    r'start_ccomment'
+    r'/\*'
     t.lexer.push_state('ccomment')
 
 def t_ANY_end_ccomment(t):
-    r'end_ccomment'
+    r'\*/'
     t.lexer.pop_state()
+
+def t_ccomment_eof(t):
+    r'\0'
+    raise lex.LexError("ccomment not close %s" % t.value, t.value)
+
+t_ccomment_ignore = " \t\n"
+
+def t_ccomment_error(t):
+    t.lexer.skip(1)
 
 lexer = lex.lex()
