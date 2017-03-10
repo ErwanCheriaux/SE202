@@ -84,5 +84,7 @@ class TestDumper(unittest.TestCase):
                         f(10)\n\
                     end", "let var a/*e*/ := 3 function f(b: int) = (a/*1*/ + b) in f(10) end")
 
+        self.check("let function f() = 0 in f end", "let function f() = 0 in f end")
+
 if __name__ == '__main__':
     unittest.main()
