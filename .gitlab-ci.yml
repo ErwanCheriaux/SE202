@@ -11,4 +11,16 @@ evaluation-tests:
   script:
     - curl -s https://www.rfc1149.net/tmp/evaluation-se202.tar.gz | tar zxf -
     - pip install ply
+
+image: rfc1149/se202
+
+cache:
+  key: all
+  paths:
+    - download
+
+test:
+  script:
+    - python -m unittest
+    - (mkdir -p download && cd download && wget -N -q https://www.rfc1149.net/tmp/evaluation-se202.tar.gz) && tar zxf download/evaluation-se202.tar.gz
     - support/run-step
