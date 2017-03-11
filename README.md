@@ -20,3 +20,18 @@ L'étape 1 est validé après plusieurs tentative car le code est soumis a de no
 # Step 2
 
 Il s'agit ici d'implémenter les déclaration de variables et de fonction, gérer le type INT, les commentaires et le moins unaire. Enfin, il faut veiller à ce que la sémentique soit réspecté tel que l'utilisation de variable déclaré en amont.
+
+Expression pour tester la sémantique:
+
+./tiger.py -bdE""
+
+Pour gérer les commentaires, il faut passer dans un état exclus permettant d'ignorer les règles du code tiger.
+
+# Step 3
+
+Nous allons devoir gérer les types qui ne sont pas fixer explicitement par le programmeur, les séquences d'expression (séparé par des ';'), des affectations, du if/then et des boucles while et for.
+Il faudra également pouvoir sortir d'une boucle avec le mot clé 'break'.  
+
+Expression pour tester le typer:
+
+./tiger.py -tbdE""
