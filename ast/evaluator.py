@@ -60,6 +60,11 @@ class Evaluator:
         else:
             return c.else_part.accept(self)
 
+    @visitor(SeqExp)
+    def visit(self, sq):
+        for exp in sq.exps:
+            return exp.accept(self)
+
     @visitor(None)
     def visit(self, node):
         raise SyntaxError("no evaluation defined for %s" % node)

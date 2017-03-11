@@ -147,3 +147,7 @@ class Binder(Visitor):
             raise BindException("Is not a function: %s" % fun.identifier.name)
         if len(fun.identifier.decl.args) != len(fun.params):
             raise BindException("Not the right number of param for the function: %s" % fun.identifier.name)
+
+    @visitor(SeqExp)
+    def visit(self, sq):
+        pass

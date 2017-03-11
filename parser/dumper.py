@@ -75,6 +75,20 @@ class Dumper(Visitor):
         p = p[:-2]
         return "%s(%s)" % (fun.identifier.accept(self), p)
 
+    @visitor(SeqExp)
+    def visit(self, sq):
+        e = ""
+        for exp in sq.exps:
+            if type(exp) is Node:
+                return "()"
+            e += exp.accept(self) + '; '
+        e = e[:-2]
+        if len(sq.exps) == 1:
+            return "%s" % (e)
+        else:
+            return "(%s)" % (e)
+
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics and type(id.decl) is VarDecl:

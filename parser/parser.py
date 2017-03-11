@@ -37,9 +37,13 @@ def p_expression_ifthenelse(p):
     '''expression : IF expression THEN expression ELSE expression'''
     p[0] = IfThenElse(p[2], p[4], p[6])
 
-def p_expression_parentheses(p):
-    'expression : LPAREN expression RPAREN'
-    p[0] = p[2]
+def p_expression_seqexp(p):
+    '''expression : LPAREN RPAREN
+                  | LPAREN expression RPAREN'''
+    if len(p) == 3:
+        p[0] = SeqExp([Node()])
+    else:
+        p[0] = SeqExp([p[2]])
 
 def p_expression_number(p):
     'expression : NUMBER'
