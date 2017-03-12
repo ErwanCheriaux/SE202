@@ -89,10 +89,10 @@ class TestDumper(unittest.TestCase):
         self.check("1+3 // clqjzdi&é678 dzo!!", "(1 + 3)")
         self.check("1+3 /* duh789 edeu /* clqjzdi&é678 dzo!! */ ùùùù */", "(1 + 3)")
 
-        self.check("()", "()")
-        self.check("1", "1")
-        self.check("(1)", "1")
-        self.check("1+2", "(1 + 2)")
+        self.check("let var a := 1 in end", "let var a: int := 1 in () end")
+        self.check("let var a := 1 in a end", "let var a: int := 1 in a end")
+        self.check("let var a := 1 in (a) end", "let var a: int := 1 in a end")
+        self.check("let var a := 1 in a; a; a; a; a end", "let var a: int := 1 in (a; a; a; a; a) end")
 
 if __name__ == '__main__':
     unittest.main()

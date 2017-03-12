@@ -53,13 +53,6 @@ class TestEvaluator(unittest.TestCase):
     def test_parse_literal(self):
         self.parse_check('42', 42)
 
-    def test_parse_sequence(self):
-        self.parse_check('1+(2+3)+4',  10)
-        self.parse_check('1+(2+3)*4',  21)
-        self.parse_check('1+(2+2)/4',   2)
-        self.parse_check('1+(2<2)+50', 51)
-        self.parse_check('1+(2=2)+50', 52)
-
     def test_precedence(self):
         self.parse_check('1 - 2 + 3', 2)
         self.parse_check('1 + 2 * 3', 7)

@@ -33,11 +33,9 @@ class Dumper(Visitor):
     @visitor(Let)
     def visit(self, let):
         d = ""
-        e = ""
         for decl in let.decls:
             d += decl.accept(self) + ' '
-        for exp  in let.exps:
-            e += exp.accept(self)
+        e = SeqExp(let.exps).accept(self)
         return "let %sin %s end" % (d, e)
 
     @visitor(Type)
@@ -79,15 +77,12 @@ class Dumper(Visitor):
     def visit(self, sq):
         e = ""
         for exp in sq.exps:
-            if type(exp) is Node:
-                return "()"
             e += exp.accept(self) + '; '
         e = e[:-2]
         if len(sq.exps) == 1:
             return "%s" % (e)
         else:
             return "(%s)" % (e)
-
 
     @visitor(Identifier)
     def visit(self, id):
