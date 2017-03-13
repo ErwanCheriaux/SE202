@@ -122,7 +122,8 @@ class Binder(Visitor):
     def visit(self, c):
         c.condition.accept(self)
         c.then_part.accept(self)
-        c.else_part.accept(self)
+        if c.else_part is not None:
+            c.else_part.accept(self)
 
     @visitor(Type)
     def visit(self):

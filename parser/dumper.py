@@ -31,8 +31,12 @@ class Dumper(Visitor):
 
     @visitor(IfThenElse)
     def visit(self, c):
-        return "if %s then %s else %s" % \
-                (c.condition.accept(self), c.then_part.accept(self), c.else_part.accept(self))
+        if c.else_part is None:
+            return "if %s then %s" % \
+                    (c.condition.accept(self), c.then_part.accept(self))
+        else:
+            return "if %s then %s else %s" % \
+                    (c.condition.accept(self), c.then_part.accept(self), c.else_part.accept(self))
 
     @visitor(Let)
     def visit(self, let):

@@ -58,6 +58,7 @@ class TestDumper(unittest.TestCase):
         self.check("2<>3+1", "(2 <> (3 + 1))")
 
     def test_ifthenelse(self):
+        self.check("if 5=5 then 2", "if (5 = 5) then 2")
         self.check("if 5=5 then 2 else 3", "if (5 = 5) then 2 else 3")
         self.check("if 5<>5 then 2+5 else 5+5", "if (5 <> 5) then (2 + 5) else (5 + 5)")
 
