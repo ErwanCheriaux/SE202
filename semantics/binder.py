@@ -141,7 +141,8 @@ class Binder(Visitor):
         self.depth += 1
         for arg in fun.args:
             arg.accept(self)
-        fun.exp.accept(self)
+        for exp in fun.exp.exps:
+            exp.accept(self)
         self.pop_scope()
         self.depth -= 1
 
