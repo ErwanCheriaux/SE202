@@ -37,7 +37,7 @@ def p_expression_binop(p):
 
 def p_expression_assignment(p):
     '''expression : ID ASSIGN expression'''
-    p[0] = Assignment(p[1], p[3])
+    p[0] = Assignment(Identifier(p[1]), p[3])
 
 def p_expression_ifthenelse(p):
     '''expression : IF expression THEN expression ELSE expression'''

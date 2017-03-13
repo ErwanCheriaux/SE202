@@ -100,5 +100,9 @@ class TestDumper(unittest.TestCase):
         self.check("let var a := 1 in (a) end", "let var a: int := 1 in a end")
         self.check("let var a := 1 in a; a; a; a; a end", "let var a: int := 1 in (a; a; a; a; a) end")
 
+    def test_assignment(self):
+        self.check("let var a := 3 function f(b: int) = (b := b + 1; a := a + b * 2) in f(5) end", \
+                   "let var a/*e*/: int := 3 function f(b: int) = (b := (b + 1); a/*1*/ := (a/*1*/ + (b * 2))) in f(5) end")
+
 if __name__ == '__main__':
     unittest.main()

@@ -62,7 +62,7 @@ class Dumper(Visitor):
         for arg in fun.args:
             a += arg.accept(self) + ', '
         a = a[:-2]
-        if fun.type == None:
+        if fun.type == None or fun.type.typename == 'void':
             return "function %s(%s) = %s" % \
                 (fun.name, a, fun.exp.accept(self))
         else:
