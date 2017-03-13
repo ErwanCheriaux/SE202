@@ -25,6 +25,10 @@ class Dumper(Visitor):
         return "(%s %s %s)" % \
                (binop.left.accept(self), binop.op, binop.right.accept(self))
 
+    @visitor(Assignment)
+    def visit(self, a):
+        return "%s := %s" % (a.identifier.accept(self), a.exp.accept(self))
+
     @visitor(IfThenElse)
     def visit(self, c):
         return "if %s then %s else %s" % \

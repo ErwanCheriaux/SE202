@@ -7,6 +7,7 @@ tokens = tokenizer.tokens
 precedence = (
     ('left', 'SEMICOLON'),
     ('nonassoc', 'ELSE'),
+    ('nonassoc', 'ASSIGN'),
     ('left', 'OR'),
     ('left', 'AND'),
     ('nonassoc', 'INF', 'SUP', 'EQU', 'DIFF', 'INFEQU', 'SUPEQU'),
@@ -34,14 +35,25 @@ def p_expression_binop(p):
                   | expression DIV expression'''
     p[0] = BinaryOperator(p[2], p[1], p[3])
 
+def p_expression_assignment(p):
+    '''expression : ID ASSIGN expression'''
+    p[0] = Assignment(p[1], p[3])
+
 def p_expression_ifthenelse(p):
     '''expression : IF expression THEN expression ELSE expression'''
     p[0] = IfThenElse(p[2], p[4], p[6])
 
 def p_seqexp(p):
     '''seqexp :
-              | seqexpsome'''
-    p[0] = p[1] if len(p) == 2 else []
+              | seqexpsome
+              | LPAREN RPAREN
+              | LPAREN seqexpsome RPAREN'''
+    if len(p) == 1 or len(p) == 3:
+        p[0] = []
+    elif len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[2]
 
 def p_seqexpsome(p):
     '''seqexpsome : expression
@@ -57,9 +69,8 @@ def p_expression_identifier(p):
     p[0] = Identifier(p[1])
 
 def p_expression_let(p):
-    '''expression : LET decls IN seqexp END
-                  | LET decls IN LPAREN seqexp RPAREN END'''
-    p[0] = Let(p[2], p[4]) if len(p) == 6 else Let(p[2], p[5])
+    '''expression : LET decls IN seqexp END'''
+    p[0] = Let(p[2], p[4])
 
 def p_decls(p):
     '''decls : decl
@@ -80,12 +91,12 @@ def p_vardecl(p):
         p[0] = VarDecl(p[2], p[4], p[6])
 
 def p_fundecl(p):
-    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression
-               | FUNCTION ID LPAREN args RPAREN COLON type EQU expression'''
+    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU seqexp
+               | FUNCTION ID LPAREN args RPAREN COLON type EQU seqexp'''
     if len(p) == 8:
-        p[0] = FunDecl(p[2], p[4], None, p[7])
+        p[0] = FunDecl(p[2], p[4], None, SeqExp(p[7]))
     else:
-        p[0] = FunDecl(p[2], p[4], p[7], p[9])
+        p[0] = FunDecl(p[2], p[4], p[7], SeqExp(p[9]))
 
 def p_args(p):
     '''args :

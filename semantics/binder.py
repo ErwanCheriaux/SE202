@@ -98,6 +98,11 @@ class Binder(Visitor):
         binop.left.accept(self)
         binop.right.accept(self)
 
+    @visitor(Assignment)
+    def visit(self, a):
+        a.identifier.accept(self)
+        a.exp.accept(self)
+
     @visitor(Let)
     def visit(self, let):
         self.push_new_scope()
@@ -110,7 +115,7 @@ class Binder(Visitor):
     @visitor(Identifier)
     def visit(self, id):
         self.lookup(id)
-        if type(id.decl) is FunDecl:
+        if type(id.decl) is not VarDecl:
             raise BindException("Is not a variable: %s" % id.name)
 
     @visitor(IfThenElse)
