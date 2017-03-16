@@ -107,5 +107,16 @@ class TestDumper(unittest.TestCase):
         self.check("let var a := 3 function f(b: int) = (b := b + 1; a := a + b * 2) in f(5) end", \
                    "let var a/*e*/: int := 3 function f(b: int) = (b := (b + 1); a/*1*/ := (a/*1*/ + (b * 2))) in f(5) end")
 
+    def test_while(self):
+        self.check("let\n\
+                        function fact(n: int) =\n\
+                            let var result := 1 in\n\
+                                while n > 0 do (result := result * n; n := n - 1);\n\
+                                result\n\
+                            end\n\
+                    in\n\
+                        fact(5)\n\
+                    end", "let function fact(n: int): int = let var result: int := 1 in while n > 0 do (result := result * n; n := n - 1); result end in fact(5) end")
+
 if __name__ == '__main__':
     unittest.main()

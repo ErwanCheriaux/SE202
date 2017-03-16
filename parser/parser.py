@@ -6,6 +6,8 @@ tokens = tokenizer.tokens
 
 precedence = (
     ('left', 'SEMICOLON'),
+    ('nonassoc', 'WHILE'),
+    ('nonassoc', 'DO'),
     ('nonassoc', 'THEN'),
     ('nonassoc', 'ELSE'),
     ('nonassoc', 'ASSIGN'),
@@ -47,6 +49,10 @@ def p_expression_ifthenelse(p):
         p[0] = IfThenElse(p[2], p[4], None)
     else:
         p[0] = IfThenElse(p[2], p[4], p[6])
+
+def p_expression_while(p):
+    '''expression : WHILE expression DO seqexp'''
+    p[0] = While(p[2], SeqExp(p[4]))
 
 def p_seqexp(p):
     '''seqexp :

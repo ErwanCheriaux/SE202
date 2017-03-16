@@ -92,6 +92,10 @@ class Dumper(Visitor):
         else:
             return "(%s)" % (e)
 
+    @visitor(While)
+    def visit(self, w):
+        return "while %s do %s" % (w.condition.accept(self), w.exp.accept(self))
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics and type(id.decl) is VarDecl:

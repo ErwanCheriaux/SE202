@@ -34,7 +34,9 @@ reserved = {
    'end': 'END',
    'var': 'VAR',
    'function': 'FUNCTION',
-   'int': 'INT'
+   'int': 'INT',
+   'while': 'WHILE',
+   'do': 'DO'
 }
 
 # List of tokens that can be recognized and are handled by the current
@@ -74,6 +76,8 @@ t_END      = r'end'
 t_VAR      = r'var'
 t_FUNCTION = r'function'
 t_INT      = r'int'
+t_WHILE    = r'while'
+t_DO       = r'do'
 
 t_ignore = ' \t'
 

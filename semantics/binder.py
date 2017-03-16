@@ -158,3 +158,8 @@ class Binder(Visitor):
     @visitor(SeqExp)
     def visit(self, sq):
         pass
+
+    @visitor(While)
+    def visit(self, w):
+        w.condition.accept(self)
+        w.exp.accept(self)
