@@ -51,20 +51,17 @@ def p_expression_ifthenelse(p):
         p[0] = IfThenElse(p[2], p[4], p[6])
 
 def p_expression_while(p):
-    '''expression : WHILE expression DO seqexp'''
-    p[0] = While(p[2], SeqExp(p[4]))
+    '''expression : WHILE expression DO expression'''
+    p[0] = While(p[2], p[4])
+
+def p_expression_parentheses(p):
+    '''expression : LPAREN seqexp RPAREN'''
+    p[0] = SeqExp(p[2])
 
 def p_seqexp(p):
     '''seqexp :
-              | seqexpsome
-              | LPAREN RPAREN
-              | LPAREN seqexpsome RPAREN'''
-    if len(p) == 1 or len(p) == 3:
-        p[0] = []
-    elif len(p) == 2:
-        p[0] = p[1]
-    else:
-        p[0] = p[2]
+              | seqexpsome'''
+    p[0] = [] if len(p) == 1 else p[1]
 
 def p_seqexpsome(p):
     '''seqexpsome : expression
@@ -102,12 +99,12 @@ def p_vardecl(p):
         p[0] = VarDecl(p[2], p[4], p[6])
 
 def p_fundecl(p):
-    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU seqexp
-               | FUNCTION ID LPAREN args RPAREN COLON type EQU seqexp'''
+    '''fundecl : FUNCTION ID LPAREN args RPAREN EQU expression
+               | FUNCTION ID LPAREN args RPAREN COLON type EQU expression'''
     if len(p) == 8:
-        p[0] = FunDecl(p[2], p[4], None, SeqExp(p[7]))
+        p[0] = FunDecl(p[2], p[4], None, p[7])
     else:
-        p[0] = FunDecl(p[2], p[4], p[7], SeqExp(p[9]))
+        p[0] = FunDecl(p[2], p[4], p[7], p[9])
 
 def p_args(p):
     '''args :
