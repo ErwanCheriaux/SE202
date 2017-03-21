@@ -108,7 +108,7 @@ class Binder(Visitor):
         self.push_new_scope()
         for decl in let.decls:
             decl.accept(self)
-        for exp  in let.exps:
+        for exp in let.exps:
             exp.accept(self)
         self.pop_scope()
 
@@ -124,10 +124,6 @@ class Binder(Visitor):
         c.then_part.accept(self)
         if c.else_part is not None:
             c.else_part.accept(self)
-
-    @visitor(Type)
-    def visit(self):
-        pass
 
     @visitor(VarDecl)
     def visit(self, var):
@@ -156,4 +152,5 @@ class Binder(Visitor):
 
     @visitor(SeqExp)
     def visit(self, sq):
-        pass
+        for exp in sq.exps:
+            exp.accept(self)

@@ -36,10 +36,6 @@ def p_expression_binop(p):
                   | expression DIV expression'''
     p[0] = BinaryOperator(p[2], p[1], p[3])
 
-def p_expression_parentheses(p):
-    '''expression : LPAREN seqexp RPAREN'''
-    p[0] = SeqExp(p[2])
-
 def p_expression_assignment(p):
     '''expression : ID ASSIGN expression'''
     p[0] = Assignment(Identifier(p[1]), p[3])
@@ -51,6 +47,10 @@ def p_expression_ifthenelse(p):
         p[0] = IfThenElse(p[2], p[4], None)
     else:
         p[0] = IfThenElse(p[2], p[4], p[6])
+
+def p_expression_parentheses(p):
+    '''expression : LPAREN seqexp RPAREN'''
+    p[0] = SeqExp(p[2])
 
 def p_seqexp(p):
     '''seqexp :
