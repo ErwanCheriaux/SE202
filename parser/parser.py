@@ -36,6 +36,10 @@ def p_expression_binop(p):
                   | expression DIV expression'''
     p[0] = BinaryOperator(p[2], p[1], p[3])
 
+def p_expression_parentheses(p):
+    'expression : LPAREN expression RPAREN'
+    p[0] = p[2]
+
 def p_expression_assignment(p):
     '''expression : ID ASSIGN expression'''
     p[0] = Assignment(Identifier(p[1]), p[3])
