@@ -100,7 +100,7 @@ class TestDumper(unittest.TestCase):
         self.check("1+3 /* duh789 edeu /* clqjzdi&é678 dzo!! */ ùùùù */", "(1 + 3)")
 
     def test_seqexp(self):
-        self.check("let var a := 1 in end", "let var a: int := 1 in () end")
+        self.check("let var a := 1 in end", "let var a: int := 1 in end")
         self.check("let var a := 1 in a end", "let var a: int := 1 in a end")
         self.check("let var a := 1 in (a) end", "let var a: int := 1 in a end")
         self.check("let var a := 1 in a; a; a; a; a end", "let var a: int := 1 in (a; a; a; a; a) end")
