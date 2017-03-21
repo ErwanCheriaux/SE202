@@ -118,7 +118,7 @@ class TestDumper(unittest.TestCase):
                             end\n\
                     in\n\
                         fact(5)\n\
-                    end", "let function fact(n: int): int = let var result: int := 1 in while n > 0 do (result := result * n; n := n - 1); result end in fact(5) end")
+                    end", "let function fact(n: int): int = let var result: int := 1 in (while (n > 0) do (result := (result * n); n := (n - 1)); result) end in fact(5) end")
 
 if __name__ == '__main__':
     unittest.main()
