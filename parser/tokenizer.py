@@ -36,7 +36,9 @@ reserved = {
    'function': 'FUNCTION',
    'int': 'INT',
    'while': 'WHILE',
-   'do': 'DO'
+   'do': 'DO',
+   'for': 'FOR',
+   'to': 'TO',
 }
 
 # List of tokens that can be recognized and are handled by the current
@@ -78,6 +80,8 @@ t_FUNCTION = r'function'
 t_INT      = r'int'
 t_WHILE    = r'while'
 t_DO       = r'do'
+t_FOR      = r'for'
+t_TO       = r'to'
 
 t_ignore = ' \t'
 

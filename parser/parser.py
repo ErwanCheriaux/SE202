@@ -54,6 +54,14 @@ def p_expression_while(p):
     '''expression : WHILE expression DO expression'''
     p[0] = While(p[2], p[4])
 
+def p_expression_for(p):
+    '''expression : FOR index ASSIGN expression TO expression DO expression'''
+    p[0] = For(p[2], p[4], p[6], p[8])
+
+def p_index(p):
+    '''index : ID'''
+    p[0] = IndexDecl(p[1])
+
 def p_expression_parentheses(p):
     '''expression : LPAREN seqexp RPAREN'''
     p[0] = SeqExp(p[2])

@@ -159,3 +159,14 @@ class Binder(Visitor):
     def visit(self, w):
         w.condition.accept(self)
         w.exp.accept(self)
+
+    @visitor(For)
+    def visit(self, f):
+        f.indexdecl.accept(self)
+        f.low_bound.accept(self)
+        f.high_bound.accept(self)
+        f.exp.accept(self)
+
+    @visitor(IndexDecl)
+    def visit(self, i):
+        i.accept(self)
