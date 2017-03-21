@@ -120,5 +120,17 @@ class TestDumper(unittest.TestCase):
                         fact(5)\n\
                     end", "let function fact(n: int): int = let var result: int := 1 in while (n > 0) do (result := (result * n); n := (n - 1)); result end in fact(5) end")
 
+    def test_for(self):
+        self.check("let var a := 1 in for i := 0 to 10 do a := a+1 end", \
+                   "let var a: int := 1 in for i := 0 to 10 do a := (a + 1) end")
+        self.check("let function fact(n: int) =\n\
+                        let var result := 1 in\n\
+                            for i := 1 to n do result := result * n;\n\
+                            result\n\
+                        end\n\
+                    in\n\
+                        fact(5)\n\
+                    end", "let function fact(n: int): int = let var result: int := 1 in for i := 1 to n do result := (result * n); result end in fact(5) end")
+
 if __name__ == '__main__':
     unittest.main()

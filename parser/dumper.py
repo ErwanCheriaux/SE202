@@ -104,6 +104,10 @@ class Dumper(Visitor):
         return "for %s := %s to %s do %s" % \
         (f.indexdecl.accept(self), f.low_bound.accept(self), f.high_bound.accept(self), f.exp.accept(self))
 
+    @visitor(IndexDecl)
+    def visit(self, i):
+        return "%s" % (i.name)
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics and type(id.decl) is VarDecl:

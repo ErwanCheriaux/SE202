@@ -165,8 +165,10 @@ class Binder(Visitor):
         f.indexdecl.accept(self)
         f.low_bound.accept(self)
         f.high_bound.accept(self)
+        self.push_new_loop(f)
         f.exp.accept(self)
+        self.pop_loop()
 
     @visitor(IndexDecl)
     def visit(self, i):
-        i.accept(self)
+        self.add_binding(i)
