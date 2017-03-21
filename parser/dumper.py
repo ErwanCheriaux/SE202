@@ -44,8 +44,9 @@ class Dumper(Visitor):
         e = ""
         for decl in let.decls:
             d += decl.accept(self) + ' '
-        if let.exps != []:
-            e = SeqExp(let.exps).accept(self) + ' '
+        for exp in let.exps:
+            e += exp.accept(self) + '; '
+        e = e[:-2] + ' ' if e else ""
         return "let %sin %send" % (d, e)
 
     @visitor(Type)
