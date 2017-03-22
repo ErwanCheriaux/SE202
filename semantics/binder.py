@@ -172,3 +172,7 @@ class Binder(Visitor):
     @visitor(IndexDecl)
     def visit(self, i):
         self.add_binding(i)
+
+    @visitor(Break)
+    def visit(self, b):
+        b.loop.accept(self)

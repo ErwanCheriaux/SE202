@@ -39,6 +39,7 @@ reserved = {
    'do': 'DO',
    'for': 'FOR',
    'to': 'TO',
+   'break': 'BREAK',
 }
 
 # List of tokens that can be recognized and are handled by the current
@@ -82,6 +83,7 @@ t_WHILE    = r'while'
 t_DO       = r'do'
 t_FOR      = r'for'
 t_TO       = r'to'
+t_BREAK    = r'break'
 
 t_ignore = ' \t'
 

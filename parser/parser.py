@@ -62,6 +62,10 @@ def p_index(p):
     '''index : ID'''
     p[0] = IndexDecl(p[1])
 
+def p_break(p):
+    '''expression : BREAK'''
+    p[0] = Break()
+
 def p_expression_parentheses(p):
     '''expression : LPAREN seqexp RPAREN'''
     p[0] = SeqExp(p[2])

@@ -132,5 +132,15 @@ class TestDumper(unittest.TestCase):
                         fact(5)\n\
                     end", "let function fact(n: int): int = let var result: int := 1 in for i := 1 to n do result := (result * n); result end in fact(5) end")
 
+    def test_break(self):
+        self.check("let var a := 0 in\n\
+                        for i := 1 to 10 do\n\
+                        let var b := 1 in\n\
+                            if i > 3 then break;\n\
+                            a := a + b\n\
+                        end;\n\
+                        a // Vaut 30\n\
+                    end","")
+                    
 if __name__ == '__main__':
     unittest.main()

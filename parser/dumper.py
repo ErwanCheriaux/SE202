@@ -108,6 +108,10 @@ class Dumper(Visitor):
     def visit(self, i):
         return "%s" % (i.name)
 
+    @visitor(Break)
+    def visit(self, b):
+        return "break"
+
     @visitor(Identifier)
     def visit(self, id):
         if self.semantics and type(id.decl) is VarDecl:
