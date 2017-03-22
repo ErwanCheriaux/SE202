@@ -106,8 +106,10 @@ class Binder(Visitor):
     @visitor(Let)
     def visit(self, let):
         self.push_new_scope()
+        self.push_new_loop(let)
         for decl in let.decls:
             decl.accept(self)
+        self.pop_loop()
         for exp in let.exps:
             exp.accept(self)
         self.pop_scope()
@@ -158,7 +160,9 @@ class Binder(Visitor):
     @visitor(While)
     def visit(self, w):
         w.condition.accept(self)
+        self.push_new_loop(w)
         w.exp.accept(self)
+        self.pop_loop()
 
     @visitor(For)
     def visit(self, f):
@@ -175,4 +179,6 @@ class Binder(Visitor):
 
     @visitor(Break)
     def visit(self, b):
-        b.loop.accept(self)
+        if type(self.current_loop()) is Let:
+            raise BindException("Break in the declaration part")
+        self.pop_loop()

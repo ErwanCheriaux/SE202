@@ -140,7 +140,7 @@ class TestDumper(unittest.TestCase):
                             a := a + b\n\
                         end;\n\
                         a // Vaut 30\n\
-                    end","")
-                    
+                    end","let var a: int := 0 in for i := 1 to 10 do let var b: int := 1 in if (i > 3) then break; a := (a + b) end; a end")
+
 if __name__ == '__main__':
     unittest.main()
