@@ -117,7 +117,7 @@ class Binder(Visitor):
     @visitor(Identifier)
     def visit(self, id):
         self.lookup(id)
-        if type(id.decl) is not VarDecl and not IndexDecl:
+        if type(id.decl) is not VarDecl and type(id.decl) is not IndexDecl:
             raise BindException("Is not a variable: %s" % id.name)
 
     @visitor(IfThenElse)
