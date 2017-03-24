@@ -165,6 +165,8 @@ class Binder(Visitor):
     @visitor(FunCall)
     def visit(self, fun):
         fun.identifier.decl = self.lookup(fun.identifier)
+        for param in fun.params:
+            param.accept(self)
         if type(fun.identifier.decl) is not FunDecl:
             raise BindException("Is not a function: %s" % fun.identifier.name)
         if len(fun.identifier.decl.args) != len(fun.params):
