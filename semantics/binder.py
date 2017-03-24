@@ -168,12 +168,14 @@ class Binder(Visitor):
 
     @visitor(For)
     def visit(self, f):
-        f.indexdecl.accept(self)
         f.low_bound.accept(self)
         f.high_bound.accept(self)
+        self.push_new_scope()
         self.push_new_loop(f)
+        f.indexdecl.accept(self)
         f.exp.accept(self)
         self.pop_loop()
+        self.pop_scope()
 
     @visitor(IndexDecl)
     def visit(self, i):
