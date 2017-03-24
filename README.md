@@ -35,3 +35,9 @@ Il faudra également pouvoir sortir d'une boucle avec le mot clé 'break'.
 Expression pour tester le typer:
 
 ./tiger.py -tbdE""
+
+Le test 21 de l'étape 3 a été particulierement difficile à debuggé, faute d'information.
+
+# Step 4
+
+Dans cette étape, nous allons transformer notre code en représentation intermédiaire (IR)
