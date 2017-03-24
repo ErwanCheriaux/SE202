@@ -101,6 +101,8 @@ class Binder(Visitor):
     @visitor(Assignment)
     def visit(self, a):
         a.identifier.accept(self)
+        if type(a.identifier.decl) is not VarDecl:
+            raise BindException("Can't modify this variable : %s" % a.identifier)
         a.exp.accept(self)
 
     @visitor(Let)
