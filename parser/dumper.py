@@ -55,7 +55,7 @@ class Dumper(Visitor):
 
     @visitor(VarDecl)
     def visit(self, var):
-        scope = '/*e*/' if var.escapes else ''
+        scope = '/*e*/' if self.semantics and var.escapes else ''
         if var.type == None:
             return "var %s := %s" % (var.name+scope, var.exp.accept(self))
         elif var.exp == None:
