@@ -62,7 +62,7 @@ def p_index(p):
     '''index : ID'''
     p[0] = IndexDecl(p[1])
 
-def p_break(p):
+def p_expression_break(p):
     '''expression : BREAK'''
     p[0] = Break()
 
