@@ -203,4 +203,5 @@ class Binder(Visitor):
     def visit(self, b):
         if type(self.current_loop()) is Let:
             raise BindException("Break in the declaration part")
+        b.loop = self.current_loop()
         self.pop_loop()
