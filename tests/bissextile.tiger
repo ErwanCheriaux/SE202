@@ -1,6 +1,4 @@
 //0
-//année bissextile     = 1
-//année non bissextile = 0
 let
    function modulo(x: int, y: int) =
    let
@@ -15,4 +13,8 @@ let
       else 1
 in
    print_int(bissextile(2017))
+   /*
+   * année bissextile     = 1
+   * année non bissextile = 0
+   */
 end
