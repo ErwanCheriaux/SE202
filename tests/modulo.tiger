@@ -1,0 +1,11 @@
+//1
+let
+   function modulo(x: int, y: int) =
+   let
+      var d := x/y
+   in
+      x-d*y
+   end
+in
+   print_int(modulo(10, 3))
+end
