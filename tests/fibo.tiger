@@ -5,5 +5,5 @@ let
       else if n<3 then 1
       else fibo(n-1) + fibo(n-2)
 in
-   fibo(8)
+   print_int(fibo(8))
 end
