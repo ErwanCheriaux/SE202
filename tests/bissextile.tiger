@@ -1,0 +1,18 @@
+//0
+//année bissextile     = 1
+//année non bissextile = 0
+let
+   function modulo(x: int, y: int) =
+   let
+      var d := x/y
+   in
+      x-d*y
+   end
+   function bissextile(year: int) =
+      if modulo(year, 4) then 0
+      else if modulo(year, 100) then 1
+      else if modulo(year, 400) then 0
+      else 1
+in
+   print_int(bissextile(2017))
+end
