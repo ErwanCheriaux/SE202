@@ -1,0 +1,7 @@
+//120
+let 
+   function fact(n: int) =
+      if n < 3 then n else fact(n-1) * n 
+in
+   print_int(fact(5)) 
+end
