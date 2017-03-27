@@ -1,0 +1,9 @@
+//21
+let
+   function fibo(n: int) =
+      if n<1 then 0
+      else if n<3 then 1
+      else fibo(n-1) + fibo(n-2)
+in
+   fibo(8)
+end
