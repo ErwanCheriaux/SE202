@@ -1,0 +1,24 @@
+//6
+let
+   var a := 1
+   function x() = 
+   let
+      var b := 2
+      function y() =
+      let
+         var c := 3
+         function z() =
+         let
+            var d := a+b+c
+         in
+            d
+         end
+      in
+         z()
+      end
+   in
+      y()
+   end
+in
+   print_int(x())
+end
