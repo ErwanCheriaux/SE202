@@ -1,12 +1,12 @@
 //100
 let
    function f(n: int) =
-      let 
-         var result := 0 
-      in
-         for i := 0 to n-1 do result := result+1;
-         result
-      end
+   let 
+      var result := 0 
+   in
+      for i := 0 to n-1 do result := result+1;
+      result
+   end
 in
    print_int(f(100))
 end
