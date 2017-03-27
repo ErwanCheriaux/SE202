@@ -1,0 +1,12 @@
+//100
+let
+   function f(n: int) =
+      let 
+         var result := 0
+      in
+         while result < n do result := result+1;
+         result
+      end
+in
+   print_int(f(100))
+end
