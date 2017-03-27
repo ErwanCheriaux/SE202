@@ -4,7 +4,7 @@ let
       let 
          var result := 0 
       in
-         for i := 0 to n do result := result+1;
+         for i := 0 to n-1 do result := result+1;
          result
       end
 in
