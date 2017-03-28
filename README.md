@@ -41,3 +41,6 @@ Le test 21 de l'étape 3 a été particulierement difficile à debuggé, faute d
 # Step 4
 
 Dans cette étape, nous allons transformer notre code en représentation intermédiaire (IR)
+
+Divers tests sont écrit en tiger dans le répertoires test/
+Concernant le test bissextile.tiger, le résultat attendu est '1' pour une année bissextile et '0' pour une année non bissextile
