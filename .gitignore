@@ -2,3 +2,10 @@
 *.out
 parsetab.py
 parser/parsetab.py
+common/*
+scripts/*
+step1/*
+step2/*
+step3/*
+step4/*
+support/*
