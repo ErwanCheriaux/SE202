@@ -13,8 +13,4 @@ let
       else 1
 in
    print_int(bissextile(2017))
-   /*
-   * année bissextile     = 1
-   * année non bissextile = 0
-   */
 end
