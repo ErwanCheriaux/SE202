@@ -14,6 +14,9 @@ def reorder_blocks(seq, frame):
     # et finnissant par un (c)jump
     dico = init_dico(seq)
 
+    #debug
+    display_dico(dico)
+
     return seq
 
 def init_dico(seq):
@@ -44,15 +47,12 @@ def init_dico(seq):
         else:
             list.append(stm)
 
-    print("DICO START")
+    return dico
 
+def display_dico(dico):
     for cle,valeur in dico.items():
         print(cle)
         for l in valeur:
             print(l)
             if   isinstance(l, JUMP):  print(l.target.label)
             elif isinstance(l, CJUMP): print(l.ifTrue.label, l.ifFalse.label)
-
-    print("DICO END")
-
-    return dico
