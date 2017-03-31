@@ -1,6 +1,7 @@
 from ir.nodes import *
 from frame.frame import Frame
 
+
 class Block:
     """Block commencant par un label et terminant par un (c)jump"""
 
@@ -24,6 +25,7 @@ class Block:
         if self.cjump: print(self.jumpTrue,self.jumpFalse)
         else:          print(self.jump)
 
+
 def reorder_blocks(seq, frame):
     """Reorder blocks in seq so that the negative branch of a CJUMP always
     follows the CJUMP itself. frame is the frame of the corresponding
@@ -36,13 +38,13 @@ def reorder_blocks(seq, frame):
     # et finnissant par un (c)jump
     dico = init_dico(seq)
 
-    # debug
-    display_dico(dico)
-
     # Réordonne les blocks du dico
     list_reorder = init_list(dico)
-
+    # debug
+    display_list(list_reorder)
+    
     return seq
+
 
 def init_dico(seq):
 
@@ -71,30 +73,48 @@ def init_dico(seq):
             is_block = False
         else:
             list.append(stm)
-
     return dico
 
+
 def init_list(dico):
+
+    list = []
+
+    for block in dico.values():
+        for stm in analyse(block, dico):
+            list.append(stm)
+    return list
+
+
+def analyse(block, dico):
+
     list = []
     next_label = ""
 
-    for block in dico.values():
-        list = analyse(block)
-
-    return list
-
-def analyse(block):
     if not block.exam:
         block.exam = True
-        list.append(block.stm)
+        for stm in block.stms:
+            list.append(stm)
         if block.cjump:
             next_label = block.jumpFalse
         else:
             next_label = block.jump
-        analyse(dico[next_label])
+        if next_label in dico:
+            for stm in analyse(dico[next_label], dico):
+                list.append(stm)
     return list
+
 
 def display_dico(dico):
     print("=== DICTIONNAIRE ===")
     for block in dico.values():
         block.display()
+
+
+def display_list(list):
+    print("=== LISTE ===")
+    for stm in list:
+        print(stm)
+        if   isinstance(stm, LABEL): print(stm.label)
+        elif isinstance(stm, JUMP):  print(stm.target.label)
+        elif isinstance(stm, CJUMP): print(stm.ifTrue.label, stm.ifFalse.label)
