@@ -42,7 +42,7 @@ def reorder_blocks(seq, frame):
     list_reorder = init_list(dico)
     # debug
     display_list(list_reorder)
-    
+
     return seq
 
 
@@ -97,6 +97,12 @@ def analyse(block, dico):
             list.append(stm)
         if block.cjump:
             next_label = block.jumpFalse
+            if dico[next_label].exam:
+                #inversion de la condition
+                next_label = block.jumpTrue
+                if dico[next_label].exam:
+                    #jump vers un label fictif
+                    next_label = "fictif"
         else:
             next_label = block.jump
         if next_label in dico:
