@@ -4,14 +4,25 @@ from frame.frame import Frame
 class Block:
     """Block commencant par un label et terminant par un (c)jump"""
 
-    def __init__(self, name, jump, stms):
+    def __init__(self, name, stms, cjump, jump=None, jumpTrue=None, jumpFalse=None):
         assert isinstance(name, Label), "name must be a Label"
-        assert isinstance(jump, Label), "jump must be a Label"
         assert isinstance(stms, list), "stms must be a list of Stm"
-        self.name  = name
-        self.jump  = jump
-        self.block = block
-        self.exam  = False
+        self.name      = name
+        self.stms      = stms
+        self.cjump     = cjump
+        self.jump      = jump
+        self.jumpTrue  = jumpTrue
+        self.jumpFalse = jumpFalse
+        self.exam      = False
+
+    def display(self):
+        print(self.name)
+
+        for stm in self.stms:
+            print(stm)
+
+        if self.cjump: print(self.jumpTrue,self.jumpFalse)
+        else:          print(self.jump)
 
 def reorder_blocks(seq, frame):
     """Reorder blocks in seq so that the negative branch of a CJUMP always
@@ -45,18 +56,18 @@ def init_dico(seq):
             # Ajout d'un jump
             if is_block:
                 list.append(JUMP(NAME(stm.label)))
-                dico[name] = list
+                dico[name] = Block(name=name, stms=list, cjump=False, jump=stm.label)
             # Initialisation name, list et is_block
             name = stm.label
             list = [stm]
             is_block = True
         elif isinstance(stm, JUMP):
             list.append(stm)
-            dico[name] = list
+            dico[name] = Block(name=name, stms=list, cjump=False, jump=stm.target.label)
             is_block = False
         elif isinstance(stm, CJUMP):
             list.append(stm)
-            dico[name] = list
+            dico[name] = Block(name=name, stms=list, cjump=True, jumpTrue=stm.ifTrue.label, jumpFalse=stm.ifFalse.label)
             is_block = False
         else:
             list.append(stm)
@@ -69,9 +80,5 @@ def init_list(dico):
 
 def display_dico(dico):
     print("=== DICTIONNAIRE ===")
-    for cle,valeur in dico.items():
-        print(cle)
-        for l in valeur:
-            print(l)
-            if   isinstance(l, JUMP):  print(l.target.label)
-            elif isinstance(l, CJUMP): print(l.ifTrue.label, l.ifFalse.label)
+    for block in dico.values():
+        block.display()
