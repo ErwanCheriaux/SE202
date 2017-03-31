@@ -14,8 +14,11 @@ def reorder_blocks(seq, frame):
     # et finnissant par un (c)jump
     dico = init_dico(seq)
 
-    #debug
+    # debug
     display_dico(dico)
+
+    # Réordonne les blocks du dico
+    list_reorder = init_list(dico)
 
     return seq
 
@@ -49,7 +52,12 @@ def init_dico(seq):
 
     return dico
 
+def init_list(dico):
+
+    return list
+
 def display_dico(dico):
+    print("=== DICTIONNAIRE ===")
     for cle,valeur in dico.items():
         print(cle)
         for l in valeur:
