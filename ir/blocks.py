@@ -8,5 +8,32 @@ def reorder_blocks(seq, frame):
     function."""
     assert(isinstance(seq, SEQ))
     assert(isinstance(frame, Frame))
-    # Implement here
+
+    dico = {}
+    list = []
+    name = ""
+
+    for stm in seq.stms:
+        if isinstance(stm, LABEL):
+            print("xxxxxx")
+            print (stm.label)
+            name = stm.label
+            list = [stm]
+        elif isinstance(stm, JUMP) or isinstance(stm, CJUMP):
+            print (stm)
+            list.append(stm)
+            dico[name] = list
+        else:
+            print (stm)
+            list.append(stm)
+
+    print("DICO START")
+
+    for cle,valeur in dico.items():
+        print (cle)
+        for l in valeur:
+            print (l)
+
+    print("DICO END")
+
     return seq
