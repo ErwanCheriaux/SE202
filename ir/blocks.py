@@ -9,12 +9,16 @@ def reorder_blocks(seq, frame):
     assert(isinstance(seq, SEQ))
     assert(isinstance(frame, Frame))
 
+    # Ajout des jumps a la fin de chaque block n'en possedant pas
+    # Rempli le dictionnaire contenant les blocks commancant par un label
+    # et finnissant par un (c)jump
     dico = init_dico(seq)
 
     return seq
 
 def init_dico(seq):
 
+    is_block = False
     dico = {}
     list = []
     name = ""
@@ -24,17 +28,24 @@ def init_dico(seq):
             print("xxxxxx")
             print (stm.label)
             name = stm.label
+            # Ajout d'un jump
+            if is_block:
+                list.append(JUMP(NAME(name)))
+                dico[name] = list
             list = [stm]
+            is_block = True
         elif isinstance(stm, JUMP):
             print (stm)
             list.append(stm)
             dico[name] = list
+            is_block = False
         elif isinstance(stm, CJUMP):
             print (stm)
             print (stm.ifTrue.label)
             print (stm.ifFalse.label)
             list.append(stm)
             dico[name] = list
+            is_block = False
         else:
             print (stm)
             list.append(stm)
