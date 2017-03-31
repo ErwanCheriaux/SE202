@@ -9,6 +9,12 @@ def reorder_blocks(seq, frame):
     assert(isinstance(seq, SEQ))
     assert(isinstance(frame, Frame))
 
+    dico = init_dico(seq)
+
+    return seq
+
+def init_dico(seq):
+
     dico = {}
     list = []
     name = ""
@@ -19,8 +25,14 @@ def reorder_blocks(seq, frame):
             print (stm.label)
             name = stm.label
             list = [stm]
-        elif isinstance(stm, JUMP) or isinstance(stm, CJUMP):
+        elif isinstance(stm, JUMP):
             print (stm)
+            list.append(stm)
+            dico[name] = list
+        elif isinstance(stm, CJUMP):
+            print (stm)
+            print (stm.ifTrue.label)
+            print (stm.ifFalse.label)
             list.append(stm)
             dico[name] = list
         else:
@@ -36,4 +48,4 @@ def reorder_blocks(seq, frame):
 
     print("DICO END")
 
-    return seq
+    return dico
