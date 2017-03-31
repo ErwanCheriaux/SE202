@@ -75,7 +75,23 @@ def init_dico(seq):
     return dico
 
 def init_list(dico):
+    list = []
+    next_label = ""
 
+    for block in dico.values():
+        list = analyse(block)
+
+    return list
+
+def analyse(block):
+    if not block.exam:
+        block.exam = True
+        list.append(block.stm)
+        if block.cjump:
+            next_label = block.jumpFalse
+        else:
+            next_label = block.jump
+        analyse(dico[next_label])
     return list
 
 def display_dico(dico):
