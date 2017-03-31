@@ -44,3 +44,10 @@ Dans cette étape, nous allons transformer notre code en représentation interm�
 
 Divers tests sont écrit en tiger dans le répertoires test/
 Concernant le test bissextile.tiger, le résultat attendu est '1' pour une année bissextile et '0' pour une année non bissextile
+
+Malgré une très grande confusion avec tant d'information dès les diapositives de cours, je comprends que l'on commence par ajouter des noeuds JUMP à la fin de chaque bloc qui n'en possède pas déjà.
+Puis on met chacun bloque dans un dictionnaire python pour plus facilement manipulez-les blocs et les réordonner.
+
+Je ne comprends pas pourquoi est-ce que l'affichage de mon dico à lieu 2 fois lors de l'execution de cette commande :
+
+./tiger.py -c tests/fact_rec.tiger

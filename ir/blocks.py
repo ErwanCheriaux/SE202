@@ -25,37 +25,33 @@ def init_dico(seq):
 
     for stm in seq.stms:
         if isinstance(stm, LABEL):
-            print("xxxxxx")
-            print (stm.label)
-            name = stm.label
             # Ajout d'un jump
             if is_block:
-                list.append(JUMP(NAME(name)))
+                list.append(JUMP(NAME(stm.label)))
                 dico[name] = list
+            # Initialisation name, list et is_block
+            name = stm.label
             list = [stm]
             is_block = True
         elif isinstance(stm, JUMP):
-            print (stm)
             list.append(stm)
             dico[name] = list
             is_block = False
         elif isinstance(stm, CJUMP):
-            print (stm)
-            print (stm.ifTrue.label)
-            print (stm.ifFalse.label)
             list.append(stm)
             dico[name] = list
             is_block = False
         else:
-            print (stm)
             list.append(stm)
 
     print("DICO START")
 
     for cle,valeur in dico.items():
-        print (cle)
+        print(cle)
         for l in valeur:
-            print (l)
+            print(l)
+            if   isinstance(l, JUMP):  print(l.target.label)
+            elif isinstance(l, CJUMP): print(l.ifTrue.label, l.ifFalse.label)
 
     print("DICO END")
 
