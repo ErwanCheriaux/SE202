@@ -40,14 +40,12 @@ def reorder_blocks(seq, frame):
 
     # Réordonne les blocks du dico
     list_reorder = init_list(dico)
-    # debug
-    display_list(list_reorder)
 
     # Suppression des jump inutile
     list_reorder = linearisation(list_reorder)
-    # debug
-    display_list(list_reorder)
 
+    # Cette concaténation deviens le nouveau corps du nœud SEQ
+    seq.stms = list_reorder
     return seq
 
 
@@ -128,6 +126,7 @@ def display_dico(dico):
     print("=== DICTIONNAIRE ===")
     for block in dico.values():
         block.display()
+    print()
 
 
 def display_list(list):
@@ -137,3 +136,4 @@ def display_list(list):
         if   isinstance(stm, LABEL): print(stm.label)
         elif isinstance(stm, JUMP):  print(stm.target.label)
         elif isinstance(stm, CJUMP): print(stm.ifTrue.label, stm.ifFalse.label)
+    print()
