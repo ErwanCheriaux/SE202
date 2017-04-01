@@ -5,7 +5,7 @@ from frame.frame import Frame
 class Block:
     """Block commencant par un label et terminant par un (c)jump"""
 
-    def __init__(self, name, stms, cjump, jump=None, jumpTrue=None, jumpFalse=None):
+    def __init__(self, name, stms, cjump=None, jump=None, jumpTrue=None, jumpFalse=None):
         assert isinstance(name, Label), "name must be a Label"
         assert isinstance(stms, list), "stms must be a list of Stm"
         self.name      = name
@@ -76,6 +76,8 @@ def init_dico(seq):
             is_block = False
         else:
             list.append(stm)
+    # ajout du label end sans jump
+    dico[name] = Block(name=name, stms=list)
     return dico
 
 
