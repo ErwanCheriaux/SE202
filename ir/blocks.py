@@ -8,6 +8,9 @@ class Block:
     def __init__(self, name, stms, cjump=None, jump=None, jumpTrue=None, jumpFalse=None):
         assert isinstance(name, Label), "name must be a Label"
         assert isinstance(stms, list), "stms must be a list of Stm"
+        assert jump is None or isinstance(jump, Label), "jump must be a Label"
+        assert jumpTrue is None or isinstance(jumpTrue, Label), "jumpTrue must be a Label"
+        assert jumpFalse is None or isinstance(jumpFalse, Label), "jumpFalse must be a Label"
         self.name      = name
         self.stms      = stms
         self.cjump     = cjump
@@ -105,16 +108,17 @@ def analyse(block, dico):
                 next_label = block.jumpTrue
                 if dico[next_label].exam:
                     # jump vers un label fictif
-                    list_fictif = []
-                    next_label = block.jumpFalse.name + "Fictif"
+                    label = block.jumpFalse.name
+                    next_label = label + "Fictif"
 
-                    # création d'un block fictif contenant un label et un jump
-                    list_fictif.append(Label(next_label))
-                    list_fictif.append(JUMP(NAME(Label(next_label))))
-                    dico[next_label] = Block(name=next_label, stms=list_fictif, cjump=False, jump=block.jumpFalse)
+                    # ajout d'un block fictif contenant un label et un jump
+                    # dans le block courant
+                    block.stms.append(Label(next_label))
+                    block.stms.append(JUMP(NAME(Label(label))))
 
                     # MaJ de la destination en cas d'une condition fausse
                     block.stms[-1].ifFalse = NAME(Label(next_label))
+                    block.jumpFalse = NAME(Label(next_label))
                 else:
                     # inversion de la condition et des labels vrai faux
                     block.stms[-1].op = oppo(block.stms[-1].op)
