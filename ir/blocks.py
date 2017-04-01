@@ -43,6 +43,11 @@ def reorder_blocks(seq, frame):
     # debug
     display_list(list_reorder)
 
+    # Suppression des jump inutile
+    list_reorder = linearisation(list_reorder)
+    # debug
+    display_list(list_reorder)
+
     return seq
 
 
@@ -110,6 +115,14 @@ def analyse(block, dico):
                 list.append(stm)
     return list
 
+def linearisation(list):
+    i = 0
+    for l in list:
+        if isinstance(l, LABEL):
+            if isinstance(list[i-1], JUMP) and list[i-1].target.label == l.label:
+                list.pop(i-1)
+        i = i+1
+    return list
 
 def display_dico(dico):
     print("=== DICTIONNAIRE ===")
