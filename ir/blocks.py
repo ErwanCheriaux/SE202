@@ -5,7 +5,7 @@ from frame.frame import Frame
 class Block:
     """Block commencant par un label et terminant par un (c)jump"""
 
-    def __init__(self, name, stms, cjump=None, jump=None, jumpTrue=None, jumpFalse=None):
+    def __init__(self, name, stms, start, end=False, cjump=None, jump=None, jumpTrue=None, jumpFalse=None):
         assert isinstance(name, Label), "name must be a Label"
         assert isinstance(stms, list), "stms must be a list of Stm"
         assert jump is None or isinstance(jump, Label), "jump must be a Label"
@@ -17,7 +17,9 @@ class Block:
         self.jump      = jump
         self.jumpTrue  = jumpTrue
         self.jumpFalse = jumpFalse
-        self.exam      = False
+        self.start     = start
+        self.end       = end
+        self.exam      = end
 
     def display(self):
         print(self.name)
@@ -55,6 +57,7 @@ def reorder_blocks(seq, frame):
 def init_dico(seq):
 
     is_block = False
+    first_block = True
     dico = {}
     list = []
     name = ""
@@ -64,23 +67,30 @@ def init_dico(seq):
             # Ajout d'un jump
             if is_block:
                 list.append(JUMP(NAME(stm.label)))
-                dico[name] = Block(name=name, stms=list, cjump=False, jump=stm.label)
+                dico[name] = Block(name=name, stms=list, start=first_block, \
+                                   cjump=False, jump=stm.label)
+                if first_block: first_block = False
             # Initialisation name, list et is_block
             name = stm.label
             list = [stm]
             is_block = True
         elif isinstance(stm, JUMP):
             list.append(stm)
-            dico[name] = Block(name=name, stms=list, cjump=False, jump=stm.target.label)
+            dico[name] = Block(name=name, stms=list, start=first_block, \
+                               cjump=False, jump=stm.target.label)
+            if first_block: first_block = False
             is_block = False
         elif isinstance(stm, CJUMP):
             list.append(stm)
-            dico[name] = Block(name=name, stms=list, cjump=True, jumpTrue=stm.ifTrue.label, jumpFalse=stm.ifFalse.label)
+            dico[name] = Block(name=name, stms=list, start=first_block, \
+                               cjump=True, jumpTrue=stm.ifTrue.label, \
+                               jumpFalse=stm.ifFalse.label)
+            if first_block: first_block = False
             is_block = False
         else:
             list.append(stm)
     # ajout du label end sans jump
-    dico[name] = Block(name=name, stms=list)
+    dico[name] = Block(name=name, stms=list, start=False, end=True)
     return dico
 
 
@@ -88,9 +98,23 @@ def init_list(dico):
 
     list = []
 
+    # ajout du start au début de la liste
+    for block in dico.values():
+        if block.start:
+            for stm in analyse(block, dico):
+                list.append(stm)
+
+    # ajout des blocks autres dans la liste
     for block in dico.values():
         for stm in analyse(block, dico):
             list.append(stm)
+
+    # ajout du end à la fin de la liste
+    for block in dico.values():
+        if block.end:
+            for stm in block.stms:
+                list.append(stm)
+
     return list
 
 
