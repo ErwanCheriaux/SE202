@@ -101,19 +101,36 @@ def analyse(block, dico):
         for stm in block.stms:
             list.append(stm)
         if block.cjump:
+            # saut conditionnel
             next_label = block.jumpFalse
             if dico[next_label].exam:
-                #inversion de la condition
                 next_label = block.jumpTrue
                 if dico[next_label].exam:
                     #jump vers un label fictif
                     next_label = "fictif"
+                else:
+                    #inversion de la condition et des labels vrai faux
+                    dico[next_label].stms[-1].op = oppo(dico[next_label].stms[-1].op)
+                    dico[next_label].stms[-1].ifTrue, dico[next_label].stms[-1].ifFalse = \
+                        dico[next_label].stms[-1].ifFalse, dico[next_label].stms[-1].ifTrue
         else:
+            # saut inconditionnel
             next_label = block.jump
         if next_label in dico:
             for stm in analyse(dico[next_label], dico):
                 list.append(stm)
     return list
+
+def oppo(str):
+    if str == "<":    return ">="
+    elif str == "<=": return ">"
+    elif str == ">":  return "<="
+    elif str == ">=": return "<"
+    elif str == "==": return "!="
+    elif str == "!=": return "=="
+    elif str == "&":  return "|"
+    elif str == "|":  return "&"
+    else: raise AssertionError("Opperande doesn't manage %s" % str)
 
 def linearisation(list):
     i = 0
