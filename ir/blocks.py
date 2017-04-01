@@ -98,24 +98,37 @@ def analyse(block, dico):
 
     if not block.exam:
         block.exam = True
-        for stm in block.stms:
-            list.append(stm)
         if block.cjump:
             # saut conditionnel
             next_label = block.jumpFalse
             if dico[next_label].exam:
                 next_label = block.jumpTrue
                 if dico[next_label].exam:
-                    #jump vers un label fictif
-                    next_label = "fictif"
+                    # jump vers un label fictif
+                    list_fictif = []
+                    next_label = block.jumpFalse.name + "Fictif"
+
+                    # création d'un block fictif contenant un label et un jump
+                    list_fictif.append(Label(next_label))
+                    list_fictif.append(JUMP(NAME(Label(next_label))))
+                    dico[next_label] = Block(name=next_label, stms=list_fictif, cjump=False, jump=block.jumpFalse)
+
+                    # MaJ de la destination en cas d'une condition fausse
+                    block.stms[-1].ifFalse = NAME(Label(next_label))
                 else:
-                    #inversion de la condition et des labels vrai faux
-                    dico[next_label].stms[-1].op = oppo(dico[next_label].stms[-1].op)
-                    dico[next_label].stms[-1].ifTrue, dico[next_label].stms[-1].ifFalse = \
-                        dico[next_label].stms[-1].ifFalse, dico[next_label].stms[-1].ifTrue
+                    # inversion de la condition et des labels vrai faux
+                    block.stms[-1].op = oppo(block.stms[-1].op)
+                    block.stms[-1].ifTrue, block.stms[-1].ifFalse = \
+                        block.stms[-1].ifFalse, block.stms[-1].ifTrue
         else:
             # saut inconditionnel
             next_label = block.jump
+
+        # ajout du block courant à la liste
+        for stm in block.stms:
+            list.append(stm)
+
+        # on continue vers le block pointé par le jump
         if next_label in dico:
             for stm in analyse(dico[next_label], dico):
                 list.append(stm)
