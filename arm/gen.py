@@ -85,3 +85,32 @@ class Gen:
     def visit(self, const):
         temp = Temp.create("const")
         return [O("mov {{}}, #{}".format(const.value), dsts=[temp])], temp
+
+    @visitor(MEM)
+    def visit(self, mem):
+        # Registre pour stocker le résultat
+        temp = Temp.create("mem")
+        # On évalue l'adresse du MEM
+        adr_stms, adr_temp = mem.exp.accept(self)
+        # On détermine les instructions à effectuer
+        stms = adr_stms + [O("ldr {}, [{}]", dsts=[temp], srcs=[adr_temp])]
+        # On retourne les instructions et le résultat
+        return stms, temp
+
+    @visitor(CALL)
+    def visit(self, call):
+        temp = Temp.create("call")
+        call.func.accept(self)
+        for arg in call.args:
+            arg.accept(self)
+        return [], temp
+
+    @visitor(NAME)
+    def visit(self, name):
+        temp = Temp.create("name")
+        return [], temp
+
+    @visitor(ESEQ)
+    def visit(self, eseq):
+        temp = Temp.create("eseq")
+        return [], temp
