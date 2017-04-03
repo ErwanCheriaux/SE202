@@ -21,16 +21,6 @@ class Block:
         self.end       = end
         self.exam      = end
 
-    def display(self):
-        print(self.name)
-
-        for stm in self.stms:
-            print(stm)
-
-        if self.cjump: print(self.jumpTrue,self.jumpFalse)
-        else:          print(self.jump)
-
-
 def reorder_blocks(seq, frame):
     """Reorder blocks in seq so that the negative branch of a CJUMP always
     follows the CJUMP itself. frame is the frame of the corresponding
@@ -114,7 +104,6 @@ def init_list(dico):
         if block.end:
             for stm in block.stms:
                 list.append(stm)
-
     return list
 
 
@@ -163,14 +152,12 @@ def analyse(block, dico):
     return list
 
 def oppo(str):
-    if str == "<":    return ">="
+    if   str == "<":  return ">="
     elif str == "<=": return ">"
     elif str == ">":  return "<="
     elif str == ">=": return "<"
-    elif str == "==": return "!="
-    elif str == "!=": return "=="
-    elif str == "&":  return "|"
-    elif str == "|":  return "&"
+    elif str == "=":  return "<>"
+    elif str == "<>": return "="
     else: raise AssertionError("Opperande doesn't manage %s" % str)
 
 def linearisation(list):
@@ -181,19 +168,3 @@ def linearisation(list):
                 list.pop(i-1)
         i = i+1
     return list
-
-def display_dico(dico):
-    print("=== DICTIONNAIRE ===")
-    for block in dico.values():
-        block.display()
-    print()
-
-
-def display_list(list):
-    print("=== LISTE ===")
-    for stm in list:
-        print(stm)
-        if   isinstance(stm, LABEL): print(stm.label)
-        elif isinstance(stm, JUMP):  print(stm.target.label)
-        elif isinstance(stm, CJUMP): print(stm.ifTrue.label, stm.ifFalse.label)
-    print()
