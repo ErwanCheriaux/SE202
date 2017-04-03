@@ -51,3 +51,12 @@ Puis on met chacun bloque dans un dictionnaire python pour plus facilement manip
 Je ne comprends pas pourquoi est-ce que l'affichage de mon dico à lieu 2 fois lors de l'execution de cette commande :
 
 ./tiger.py -c tests/fact_rec.tiger
+
+On réordonne les blocs en conservant la position du premier et du dernier et on linéarise la liste résultante.
+
+# Step 5
+
+Dans cette étape, nous allons générer du code pour un
+processeur ARM. Le nombre de registres dont nous disposerons
+pour l’instant est infini, l’allocateur de registre sera fait lors d’une
+étape ultérieure.
