@@ -41,6 +41,14 @@ class Gen:
             op = "beq"
         elif cjump.op == "<>":
             op = "bne"
+        elif cjump.op == "<":
+            op = "blt"
+        elif cjump.op == "<=":
+            op = "ble"
+        elif cjump.op == ">":
+            op = "bgt"
+        elif cjump.op == ">=":
+            op = "bge"
         else:
             raise AssertionError("unimplemented operator {}".format(cjump.op))
         return left_stms + right_stms + [O("cmp {}, {}", srcs=[left_temp, right_temp]),
