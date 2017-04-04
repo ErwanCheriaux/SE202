@@ -111,19 +111,35 @@ class Gen:
         call.func.accept(self)
         for arg in call.args:
             arg.accept(self)
-        return [], temp
+        return [O("CALL")], temp
 
     @visitor(NAME)
     def visit(self, name):
         temp = Temp.create("name")
-        return [], temp
+        return [O("NAME")], temp
 
     @visitor(ESEQ)
     def visit(self, eseq):
         temp = Temp.create("eseq")
-        return [], temp
+        return [O("ESEQ")], temp
 
     @visitor(BINOP)
     def visit(self, binop):
         temp = Temp.create("binop")
-        return [O("BINOP")], temp
+        left_stms, left_temp = binop.left.accept(self)
+        right_stms, right_temp = binop.right.accept(self)
+        if binop.op == "+":
+            op = "add"
+        elif binop.op == "-":
+            op = "sub"
+        elif binop.op == "*":
+            op = "mul"
+        elif binop.op == "/":
+            op = "div"
+        elif binop.op == "|":
+            op = "orr"
+        elif binop.op == "&":
+            op = "and"
+        stms = left_stms + right_stms + \
+               [O("{} {}, {}, {}".format(op, temp, left_temp, right_temp))]
+        return stms, temp
