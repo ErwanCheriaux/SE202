@@ -108,10 +108,11 @@ class Gen:
     @visitor(CALL)
     def visit(self, call):
         temp = Temp.create("call")
-        call.func.accept(self)
+        func_stms, func_temp = call.func.accept(self)
         for arg in call.args:
             arg.accept(self)
-        return [O("CALL")], temp
+        stms = func_stms + [O("bl {}".format(func_temp))]
+        return stms, temp
 
     @visitor(NAME)
     def visit(self, name):
