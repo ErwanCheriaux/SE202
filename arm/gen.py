@@ -117,7 +117,8 @@ class Gen:
     @visitor(NAME)
     def visit(self, name):
         temp = Temp.create("name")
-        return [O("NAME")], temp
+        stms = [L("{}".format(name.label), name.label)]
+        return stms, temp
 
     @visitor(ESEQ)
     def visit(self, eseq):
