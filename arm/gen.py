@@ -122,3 +122,8 @@ class Gen:
     def visit(self, eseq):
         temp = Temp.create("eseq")
         return [], temp
+
+    @visitor(BINOP)
+    def visit(self, binop):
+        temp = Temp.create("binop")
+        return [O("BINOP")], temp
