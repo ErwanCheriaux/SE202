@@ -136,5 +136,6 @@ class Gen:
         elif binop.op == "&":
             op = "and"
         stms = left_stms + right_stms + \
-               [O("{} {}, {}, {}".format(op, temp, left_temp, right_temp))]
+               [O("{} {}, {}, {}".format(op, temp, left_temp, right_temp),\
+                    dsts=[temp], srcs=[left_temp, right_temp])]
         return stms, temp
