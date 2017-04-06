@@ -108,16 +108,9 @@ class Gen:
     @visitor(CALL)
     def visit(self, call):
         temp = Temp.create("call")
-        func_stms, func_temp = call.func.accept(self)
         for arg in call.args:
             arg.accept(self)
-        stms = func_stms + [O("bl {}".format(func_temp))]
-        return stms, temp
-
-    @visitor(NAME)
-    def visit(self, name):
-        temp = Temp.create("name")
-        stms = [L("{}".format(name.label), name.label)]
+        stms = [O("bl {}".format(call.func.label), jmps=[call.func.label])]
         return stms, temp
 
     @visitor(ESEQ)
