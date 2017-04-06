@@ -108,8 +108,7 @@ class Gen:
     @visitor(CALL)
     def visit(self, call):
         temp = Temp.create("call")
-        for arg in call.args:
-            arg.accept(self)
+
         stms = [O("bl {}".format(call.func.label), jmps=[call.func.label])]
         return stms, temp
 
@@ -131,10 +130,8 @@ class Gen:
             op = "mul"
         elif binop.op == "/":
             op = "div"
-        elif binop.op == "|":
-            op = "orr"
-        elif binop.op == "&":
-            op = "and"
+        else:
+            raise AssertionError("unimplemented operator {}".format(binop.op))
         stms = left_stms + right_stms + \
                [O("{} {}, {}, {}".format(op, temp, left_temp, right_temp),\
                     dsts=[temp], srcs=[left_temp, right_temp])]
