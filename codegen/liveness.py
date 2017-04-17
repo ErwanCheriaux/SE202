@@ -12,7 +12,7 @@ def liveness_analysis(frame, instrs):
     temporaries involved in a direct MOVE operation. Those are susceptible
     of merging."""
 
-    debug = True
+    debug = False
 
     interferences = {}
     coalesces = {}
@@ -29,7 +29,8 @@ def liveness_analysis(frame, instrs):
         # add interference edges (a, b 1 ), ... , (a, b j ) for any b i that is
         # not the same as c.
         if isinstance(i, M):
-            pass
+            key = i.dst.name
+            interferences[key] = [i.src]
 
     if debug:
         print("=================== FRAME ====================")
