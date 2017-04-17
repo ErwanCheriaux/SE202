@@ -10,4 +10,8 @@ def liveness_analysis(frame, instrs):
     The coalesces dictionary gives, for every temporary, the list of other
     temporaries involved in a direct MOVE operation. Those are susceptible
     of merging."""
-    raise NotImplementedError("liveness analysis")
+
+    interferences = []
+    coalesces = []
+
+    return interferences, coalesces
