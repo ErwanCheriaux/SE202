@@ -11,7 +11,7 @@ def liveness_analysis(frame, instrs):
     temporaries involved in a direct MOVE operation. Those are susceptible
     of merging."""
 
-    interferences = []
-    coalesces = []
+    interferences = {}
+    coalesces = {}
 
     return interferences, coalesces
