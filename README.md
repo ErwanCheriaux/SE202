@@ -60,3 +60,18 @@ Dans cette étape, nous allons générer du code pour un
 processeur ARM. Le nombre de registres dont nous disposerons
 pour l’instant est infini, l’allocateur de registre sera fait lors d’une
 étape ultérieure.
+
+./tiger.py -gd
+
+Permet de voir le code assembleur généré.
+
+# Step 6
+
+Les objectifs de cette ultime étape est :
+* de générer le code avec l'analyse de vivacité ;
+* de générer le code avec l'allocation de registres ;
+* d'exécuter le code ARM avec qemu en émulant un processeur Cortex A15 (qui a l'instruction de division en mode ARM) et de comparer la sortie à ce qui est attendu.
+
+./tiger.py -l
+
+Permet de voir la liveness.
