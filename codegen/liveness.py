@@ -29,8 +29,23 @@ def liveness_analysis(frame, instrs):
         # add interference edges (a, b 1 ), ... , (a, b j ) for any b i that is
         # not the same as c.
         if isinstance(i, M):
+            # interferences
             key = i.dst.name
             interferences[key] = [i.src]
+
+            # coalesces
+            dst = i.dst.name
+            src = i.src.name
+
+            if dst not in coalesces:
+                coalesces[dst] = [src]
+            else:
+                if src not in coalesces[dst]: coalesces[dst].append(src)
+
+            if src not in coalesces:
+                coalesces[src] = [dst]
+            else:
+                if dst not in coalesces[src]: coalesces[src].append(dst)
 
     if debug:
         print("=================== FRAME ====================")
@@ -42,6 +57,10 @@ def liveness_analysis(frame, instrs):
 
         print("=============== INTERFERENCES ================")
         for key, value in interferences.items():
+            print (key, value)
+
+        print("================= COALESCES ==================")
+        for key, value in coalesces.items():
             print (key, value)
 
         print("==============================================")
