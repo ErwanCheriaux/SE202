@@ -136,7 +136,8 @@ class Frame:
                   TEMP(self.param_regs[idx + 1])
                   if idx < self.max_params_in_regs - 1
                   else InFrame((idx - self.max_params_in_regs +
-                                (3 if self.has_lr else 4)) * self.word_size).toSxp(TEMP(self.fp)))
+                                (3 if self.has_lr else 4)) *
+                               self.word_size).toSxp(TEMP(self.fp)))
              for (idx, access) in enumerate(self.param_access)]
 
     def prologue(self):
