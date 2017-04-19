@@ -108,14 +108,8 @@ class Gen:
     @visitor(CALL)
     def visit(self, call):
         temp = Temp.create("call")
-
         stms = [O("bl {}".format(call.func.label), jmps=[call.func.label])]
         return stms, temp
-
-    @visitor(ESEQ)
-    def visit(self, eseq):
-        temp = Temp.create("eseq")
-        return [O("ESEQ")], temp
 
     @visitor(BINOP)
     def visit(self, binop):
