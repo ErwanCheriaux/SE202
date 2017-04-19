@@ -113,7 +113,7 @@ class Gen:
             args_stms, args_temp = arg.accept(self)
             stms = stms + args_stms
         stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
-        return stms, temp
+        return [], temp
 
     @visitor(BINOP)
     def visit(self, binop):
