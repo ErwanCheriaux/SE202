@@ -107,8 +107,12 @@ class Gen:
 
     @visitor(CALL)
     def visit(self, call):
+        stms = []
         temp = Temp.create("call")
-        stms = [O("bl {}".format(call.func.label), jmps=[call.func.label])]
+        for arg in call.args:
+            args_stms, args_temp = arg.accept(self)
+            stms = stms + args_stms
+        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
         return stms, temp
 
     @visitor(BINOP)
