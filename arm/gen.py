@@ -110,11 +110,18 @@ class Gen:
         count = 0
         stms = []
         temp = Temp.create("call")
+
+        # sauvegarde des registre 0 à 4 dans caller_save
+        for caller_save_temp in self.frame.caller_save:
+            dst_temp = Temp.create('caller_save')
+            stms = stms + [M("mov {}, {}", dst=dst_temp, src=caller_save_temp)]
+
         for arg in call.args:
             args_stms, args_temp = arg.accept(self)
             if not count :
                 self.frame.fp = args_temp
             else:
+                self.frame.param_regs.append(args_temp)
                 stms = stms + args_stms + [O("push {}".format(args_temp), srcs=[args_temp])]
             count = count + 1
 
