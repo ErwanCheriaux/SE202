@@ -107,13 +107,19 @@ class Gen:
 
     @visitor(CALL)
     def visit(self, call):
+        count = 0
         stms = []
         temp = Temp.create("call")
         for arg in call.args:
             args_stms, args_temp = arg.accept(self)
-            stms = stms + args_stms
-        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
+            if not count :
+                self.frame.fp = args_temp
+            else:
+                stms = stms + args_stms + [O("push {}".format(args_temp), srcs=[args_temp])]
+            count = count + 1
 
+        stms = stms + [O("push {}".format(self.frame.fp), srcs=[self.frame.fp])]
+        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
         return stms, temp
 
     @visitor(BINOP)
