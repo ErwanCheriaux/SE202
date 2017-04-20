@@ -112,8 +112,11 @@ class Gen:
         for arg in call.args:
             args_stms, args_temp = arg.accept(self)
             stms = stms + args_stms
-        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
-        return [], temp
+        stms = stms + [O("stmfd {}!, {}".format(self.frame.sp, self.frame.lr), dsts=[self.frame.sp]),
+                       O("bl {}".format(call.func.label), jmps=[call.func.label]),
+                       O("ldmfd {}!, {}".format(self.frame.sp, self.frame.lr), dsts=[self.frame.sp, self.frame.lr])]
+
+        return stms, temp
 
     @visitor(BINOP)
     def visit(self, binop):
