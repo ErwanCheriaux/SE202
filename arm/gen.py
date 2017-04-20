@@ -107,15 +107,31 @@ class Gen:
 
     @visitor(CALL)
     def visit(self, call):
+        count = 0
+        stms = []
         temp = Temp.create("call")
 
-        stms = [O("bl {}".format(call.func.label), jmps=[call.func.label])]
-        return stms, temp
+        # sauvegarde des registre 0 à 4 dans caller_save
+        for caller_save_temp in self.frame.caller_save:
+            dst_temp = Temp.create('caller_save')
+            if caller_save_temp.name != 'lr':
+                stms = stms + [M("mov {}, {}", dst=dst_temp, src=caller_save_temp)]
 
-    @visitor(ESEQ)
-    def visit(self, eseq):
-        temp = Temp.create("eseq")
-        return [O("ESEQ")], temp
+        # sauvegarde des arguments dans les 4 premiers reg et sur la pile
+        for arg in call.args:
+            args_stms, args_temp = arg.accept(self)
+            if not count :
+                self.frame.fp = args_temp
+            elif count<=4:
+                stms = stms + [M("mov {}, {}", dst=self.frame.caller_save[count-1], src=args_temp)]
+            else:
+                self.frame.param_regs.append(args_temp)
+                stms = stms + args_stms + [O("push {}".format(args_temp), srcs=[args_temp])]
+            count = count + 1
+
+        stms = stms + [O("push {}".format(self.frame.fp), srcs=[self.frame.fp])]
+        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
+        return stms, temp
 
     @visitor(BINOP)
     def visit(self, binop):
