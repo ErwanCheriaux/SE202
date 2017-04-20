@@ -112,9 +112,10 @@ class Gen:
         temp = Temp.create("call")
 
         # sauvegarde des registre 0 à 4 dans caller_save
-        for param_regs in self.frame.param_regs:
+        for caller_save_temp in self.frame.caller_save:
             dst_temp = Temp.create('caller_save')
-            stms = stms + [M("mov {}, {}", dst=dst_temp, src=param_regs)]
+            if caller_save_temp.name != 'lr':
+                stms = stms + [M("mov {}, {}", dst=dst_temp, src=caller_save_temp)]
 
         # sauvegarde des arguments dans les 4 premiers reg et sur la pile
         for arg in call.args:
