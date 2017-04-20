@@ -17,6 +17,19 @@ def liveness_analysis(frame, instrs):
     interferences = {}
     coalesces = {}
 
+    # Dataflow equations for liveness analysis.
+
+    # for each n
+    #   in[n] ← { }; out[n] ← { }
+    # repeat
+    # for each n
+    #   in'[n] ← in[n]; out'[n] ← out[n]
+    #   in[n] ← use[n] ∪ (out[n] − def [n])
+    #   out[n] ← Us∈succ[n] in[s]
+    # until in'[n] = in[n] and out'[n] = out[n] for all n
+
+
+
     for i in instrs:
         # At any nonmove instruction that defines a variable a, where the live-out
         # variables are b 1 , ... , b j , add interference edges
