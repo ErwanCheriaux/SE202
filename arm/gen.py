@@ -112,9 +112,7 @@ class Gen:
         for arg in call.args:
             args_stms, args_temp = arg.accept(self)
             stms = stms + args_stms
-        stms = stms + [O("stmfd {}!, {}".format(self.frame.sp, self.frame.lr), dsts=[self.frame.sp]),
-                       O("bl {}".format(call.func.label), jmps=[call.func.label]),
-                       O("ldmfd {}!, {}".format(self.frame.sp, self.frame.lr), dsts=[self.frame.sp, self.frame.lr])]
+        stms = stms + [O("bl {}".format(call.func.label), jmps=[call.func.label])]
 
         return stms, temp
 
